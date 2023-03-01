@@ -10,5 +10,6 @@ public interface ProductoServiceInt {
     List<Producto> buscarTodos();
     List<Producto> filtroParaCatalogo(String alfabetico, String precio, String busqueda);
     Producto buscarPorId(int id);
+    List<Producto> buscarProductosPorIds(List<Integer> ids);
 
 }

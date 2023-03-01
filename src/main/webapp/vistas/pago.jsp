@@ -107,8 +107,13 @@
                                                 <p class="card-text"><small class="text-muted">CVC: ${tarjeta.cvv}</small>
                                                 </p>
                                             </div>
-                                            <div class="card-footer bg-transparent">
-                                                <a href="/eliminarTarjeta/${tarjeta.idTarjeta}" class="btn btn-danger">Eliminar Tarjeta</a>
+                                            <div class="card-footer bg-transparent d-flex justify-content-center">
+                                                <form action="/eliminarTarjeta/${tarjeta.idTarjeta}" method="post">
+                                                    <button type="submit" class="btn btn-danger"
+                                                            style="margin: 10px 10px 10px 0;">
+                                                        Eliminar Tarjeta
+                                                    </button>
+                                                </form>
                                             </div>
                                         </div>
                                     </c:forEach>

@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+
 @Controller
 public class TarjetaController {
 
@@ -111,7 +112,7 @@ public class TarjetaController {
      * Ahora recupera la lista de usuarios de la tarjeta y lo borra de la lista.
      * Finalmente elimina la tarjeta de la bbdd y actualiza el listado de tarjetas para la vista.
      */
-    @GetMapping("/eliminarTarjeta/{id}") // Lo dejo cómo get para no hacer un formulario en la vista.
+    @PostMapping("/eliminarTarjeta/{id}")
     public String eliminarTarjeta(@PathVariable(name="id") int idTarjeta, Authentication authentication,
                                   RedirectAttributes redirect, Model model) {
 

@@ -55,7 +55,7 @@
                             <li>
                                 <hr class="dropdown-divider">
                             </li>
-                            <li><a class="dropdown-item" href="/pedidos">Pedidos</a></li>
+                            <li><a class="dropdown-item" href="/pedidos">Pedidos Completados</a></li>
                         </ul>
                     </li>
                     <li>

@@ -34,4 +34,15 @@ public class ProductoServiceImpl implements ProductoServiceInt {
     @Override
     public Producto buscarPorId(int id) { return prepo.findById(id).orElse(null); }
 
+
+    @Override
+    public List<Producto> buscarProductosPorIds(List<Integer> ids) {
+        try {
+            return this.prepo.buscarProductosPorIds(ids);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

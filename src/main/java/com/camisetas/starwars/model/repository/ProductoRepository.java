@@ -8,6 +8,7 @@ import java.util.List;
 
 public interface ProductoRepository extends JpaRepository<Producto, Integer> {
 
+
     @Query(value=" SELECT p FROM Producto p\n" +
             "WHERE (:busqueda IS NULL OR LOWER(p.nombre) LIKE LOWER(CONCAT('%', :busqueda, '%')))\n" +
             "ORDER BY\n" +
@@ -16,5 +17,10 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
             "  CASE WHEN :precio = 'asc' THEN p.precio END ASC,\n" +
             "  CASE WHEN :precio = 'desc' THEN p.precio END DESC\n ")
     List<Producto> filtroParaCatalogo(String alfabetico, String precio, String busqueda);
+
+    // Método para buscar productos por IDs.
+    @Query(value=" SELECT p FROM Producto p WHERE p.idProducto IN (:ids) ")
+    List<Producto> buscarProductosPorIds(List<Integer> ids);
+
 
 }

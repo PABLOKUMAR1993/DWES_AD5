@@ -117,9 +117,9 @@
                                                     Eliminar Dirección
                                                 </button>
                                             </form>
-                                            <button type="button" class="btn btn-warning" data-bs-toggle="modal"
+                                            <!--<button type="button" class="btn btn-warning" data-bs-toggle="modal"
                                                     data-bs-target="#editarDireccion" style="margin: 10px 0 10px 0;">
-                                                Editar Dirección
+                                                Editar Dirección-->
                                             </button>
                                         </div>
                                     </div>
@@ -209,7 +209,7 @@
 </div>
 
 <!-- Modal para editar direcciones -->
-<div class="modal fade" id="editarDireccion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<!-- <div class="modal fade" id="editarDireccion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -275,7 +275,7 @@
             </form>
         </div>
     </div>
-</div>
+</div> -->
 
 <!-- Footer -->
 <jsp:include page="footer.jsp"></jsp:include>
