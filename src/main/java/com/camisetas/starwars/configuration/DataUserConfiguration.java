@@ -1,5 +1,4 @@
 package com.camisetas.starwars.configuration;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -7,16 +6,27 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-
 import javax.sql.DataSource;
+
 
 @EnableWebSecurity
 @Configuration
 public class DataUserConfiguration extends WebSecurityConfigurerAdapter {
 
+
+    // Atributos
+
+
     @Autowired
     private DataSource dataSource;
 
+
+    // Métodos
+
+
+    /**
+     * Método para gestionar el login con la base de datos.
+     */
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 
@@ -31,6 +41,10 @@ public class DataUserConfiguration extends WebSecurityConfigurerAdapter {
 
     }
 
+
+    /**
+     * Método para gestionar las rutas de la aplicación.
+     */
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -47,11 +61,16 @@ public class DataUserConfiguration extends WebSecurityConfigurerAdapter {
             .permitAll();
     }
 
+
+    /**
+     * Método para gestionar los recursos estáticos.
+     */
     @Override
     public void configure(WebSecurity web) throws Exception {
         web
             .ignoring()
             .antMatchers("/resources/**");
     }
+
 
 }

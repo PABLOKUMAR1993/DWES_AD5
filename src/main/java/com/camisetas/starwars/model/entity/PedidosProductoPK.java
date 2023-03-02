@@ -1,15 +1,16 @@
 package com.camisetas.starwars.model.entity;
-
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
 import java.io.Serializable;
 
-/**
- * The primary key class for the pedidos_productos database table.
- * 
- */
+
 @Embeddable
 public class PedidosProductoPK implements Serializable {
+
+
+	// Atributos
+
+
 	//default serial version id, required for serializable classes.
 	private static final long serialVersionUID = 1L;
 
@@ -19,8 +20,17 @@ public class PedidosProductoPK implements Serializable {
 	@Column(name="id_producto", insertable=false, updatable=false)
 	private int idProducto;
 
+
+	// Constructores
+
+
 	public PedidosProductoPK() {
 	}
+
+
+	// Getters y Setters
+
+
 	public int getIdPedido() {
 		return this.idPedido;
 	}
@@ -33,6 +43,10 @@ public class PedidosProductoPK implements Serializable {
 	public void setIdProducto(int idProducto) {
 		this.idProducto = idProducto;
 	}
+
+
+	// hashCode y equals
+
 
 	public boolean equals(Object other) {
 		if (this == other) {
@@ -55,4 +69,18 @@ public class PedidosProductoPK implements Serializable {
 		
 		return hash;
 	}
+
+
+	// toString
+
+
+	@Override
+	public String toString() {
+		return "PedidosProductoPK{" +
+				"idPedido=" + idPedido +
+				", idProducto=" + idProducto +
+				'}';
+	}
+
+
 }

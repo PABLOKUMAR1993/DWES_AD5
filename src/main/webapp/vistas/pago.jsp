@@ -14,8 +14,10 @@
 </head>
 <body>
 
+
 <!-- Barra de navegación -->
 <jsp:include page="nav.jsp"></jsp:include>
+
 
 <!-- Portada -->
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
@@ -32,10 +34,12 @@
     </div>
 </div>
 
+
 <!-- Título -->
 <figure class="text-center" style="margin-top: 50px;">
     <h1 class="display-1">Tus Tarjetas</h1>
 </figure>
+
 
 <!-- Alertas -->
 <c:if test="${ errorParcial != null }">
@@ -60,6 +64,7 @@
     </div>
 </c:if>
 
+
 <!-- Si no tienes tarjetas -->
 <c:if test="${tarjetas == '[]'}">
     <div class="d-flex justify-content-center" style="margin: 50px 0 50px 0;">
@@ -82,6 +87,7 @@
         </div>
     </div>
 </c:if>
+
 
 <!-- Si tienes tarjetas -->
 <c:if test="${tarjetas != '[]'}">
@@ -132,6 +138,7 @@
         </div>
     </div>
 </c:if>
+
 
 <!-- Modal para añadir tarjetas -->
 <div class="modal fade" id="anyadirTarjeta" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -186,8 +193,10 @@
     </div>
 </div>
 
+
 <!-- Footer -->
 <jsp:include page="footer.jsp"></jsp:include>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

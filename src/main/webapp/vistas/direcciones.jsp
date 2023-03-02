@@ -2,6 +2,7 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 
+
 <!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
@@ -14,8 +15,10 @@
 </head>
 <body>
 
+
 <!-- Barra de navegación -->
 <jsp:include page="nav.jsp"></jsp:include>
+
 
 <!-- Portada -->
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
@@ -32,12 +35,14 @@
     </div>
 </div>
 
+
 <!-- Título -->
 <figure class="text-center" style="margin-top: 50px;">
     <h1 class="display-1">Tus Direcciones</h1>
 </figure>
 
-<!-- Alertas -->
+
+<!-- Alertas al crear o eliminar tarjetas -->
 <c:if test="${ errorParcial != null }">
     <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
         <div class="alert alert-danger" role="alert">
@@ -60,7 +65,8 @@
     </div>
 </c:if>
 
-<!-- Si no tienes direcciones -->
+
+<!-- Si no tienes direcciones ves esto -->
 <c:if test="${direcciones == '[]'}">
     <div class="d-flex justify-content-center" style="margin: 50px 0 50px 0;">
         <div class="container">
@@ -85,7 +91,8 @@
     </div>
 </c:if>
 
-<!-- Si tienes direcciones -->
+
+<!-- Si tienes direcciones ves esto -->
 <c:if test="${direcciones != '[]'}">
     <div class="d-flex justify-content-center" style="margin: 100px 0 100px 0;">
         <div class="container">
@@ -117,9 +124,6 @@
                                                     Eliminar Dirección
                                                 </button>
                                             </form>
-                                            <!--<button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                                                    data-bs-target="#editarDireccion" style="margin: 10px 0 10px 0;">
-                                                Editar Dirección-->
                                             </button>
                                         </div>
                                     </div>
@@ -138,6 +142,7 @@
         </div>
     </div>
 </c:if>
+
 
 <!-- Modal para añadir direcciones -->
 <div class="modal fade" id="anyadirDireccion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -208,77 +213,10 @@
     </div>
 </div>
 
-<!-- Modal para editar direcciones -->
-<!-- <div class="modal fade" id="editarDireccion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h1 class="modal-title fs-5" id="exampleModalLabelEditar">Añadir Dirección</h1>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <form method="post" action="/editarDireccion">
-                <div class="modal-body">
-
-                    <div class="mb-3">
-                        <label for="localidadEditar" class="form-label">Localidad</label>
-                        <input type="text" class="form-control" id="localidadEditar" name="localidad"
-                               aria-describedby="emailHelp" required>
-                        <div id="localidadAyudaEditar" class="form-text">
-                            Ciudad en la que se entregará el pedido.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="calleEditar" class="form-label">Calle</label>
-                        <input type="text" class="form-control" id="calleEditar" name="calle"
-                               aria-describedby="emailHelp" required>
-                        <div id="calleAyudaEditar" class="form-text">
-                            Calle en la que entregar el pedido.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="numeroEditar" class="form-label">Número</label>
-                        <input type="number" class="form-control" id="numeroEditar" name="numero"
-                               aria-describedby="emailHelp" required>
-                        <div id="numeroAyudaEditar" class="form-text">
-                            Número del edificio.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="codigoPostalEditar" class="form-label">Código Postal</label>
-                        <input type="text" class="form-control" id="codigoPostalEditar" name="codigoPostal"
-                               aria-describedby="emailHelp" required>
-                        <div id="codigoPostalAyudaEditar" class="form-text">
-                            5 números que identifican tu barrio o municipio.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="pisoEditar" class="form-label">Piso</label>
-                        <input type="number" class="form-control" id="pisoEditar" name="piso"
-                               aria-describedby="emailHelp">
-                        <div id="pisoAyudaEditar" class="form-text">
-                            Si procede, indica en que piso vives.
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="letraEditar" class="form-label">Letra</label>
-                        <input type="text" class="form-control" id="letraEditar" name="letra"
-                               aria-describedby="emailHelp">
-                        <div id="letraAyudaEditar" class="form-text">
-                            Si procede, indica la letra de tu puerta en el edificio.
-                        </div>
-                    </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                    <button type="submit" class="btn btn-primary">Actualizar Dirección</button>
-                </div>
-            </form>
-        </div>
-    </div>
-</div> -->
 
 <!-- Footer -->
 <jsp:include page="footer.jsp"></jsp:include>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

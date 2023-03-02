@@ -4,6 +4,7 @@ import java.util.Date;
 
 /**
  * Esta clase representa la información de un pedido con sus productos y cantidades.
+ * Ha sido creada para poder almacenar en un sólo objeto toda la información que necesito referente a un pedido.
  */
 public class PedidoProductoInfo {
 

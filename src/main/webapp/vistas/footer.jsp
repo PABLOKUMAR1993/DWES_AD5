@@ -14,6 +14,8 @@
 </head>
 <body>
 
+
+<!-- Footer -->
 <div class="container overflow-hidden text-center" style="padding: 50px 0 25px 0;">
     <div class="row gx-5">
         <div class="col">
@@ -28,6 +30,7 @@
         </div>
     </div>
 </div>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

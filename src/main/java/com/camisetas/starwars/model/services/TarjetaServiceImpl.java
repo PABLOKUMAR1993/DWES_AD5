@@ -1,9 +1,9 @@
 package com.camisetas.starwars.model.services;
-
 import com.camisetas.starwars.model.entity.Tarjeta;
 import com.camisetas.starwars.model.repository.TarjetaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class TarjetaServiceImpl implements TarjetaServiceInt {
@@ -19,10 +19,14 @@ public class TarjetaServiceImpl implements TarjetaServiceInt {
     // Métodos Implementados
 
 
+    /**
+     * Método que busca una tarjeta por su id.
+     */
     @Override
     public Tarjeta buscarTarjetaPorId(int idTarjeta) {
         return tarjetaRepository.findById(idTarjeta).orElse(null);
     }
+
 
     /**
      * Método que guarda una tarjeta en la base de datos.
@@ -47,8 +51,13 @@ public class TarjetaServiceImpl implements TarjetaServiceInt {
 
     }
 
+
+    /**
+     * Método que elimina una tarjeta de la base de datos.
+     */
     @Override
     public boolean eliminarTarjeta(int idTarjeta) {
+
         try {
             tarjetaRepository.deleteById(idTarjeta);
             return true;
@@ -56,6 +65,7 @@ public class TarjetaServiceImpl implements TarjetaServiceInt {
             e.printStackTrace();
             return false;
         }
+
     }
 
 }

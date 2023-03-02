@@ -33,8 +33,8 @@ public class DireccionController {
 
 
     /**
-     * Este método obtiene el usuario que tiene iniciada sesión,
-     * extrae de el las direcciones que tiene y las envía a la vista mediante el modelo.
+     * Este método obtiene el usuario que tiene iniciada sesión, extrae de el las direcciones que tiene y las envía
+     * a la vista mediante el modelo.
      */
     @GetMapping("/direcciones")
     public String direcciones(Authentication authentication, Model model) {
@@ -60,8 +60,8 @@ public class DireccionController {
      * se le añade la dirección a la lista de direcciones, y se guardan los cambios en la base de datos.
      */
     @PostMapping("/anyadirDireccion")
-    public String anyadirDireccion(Direccione direccion, Model model, Authentication authentication,
-                                   RedirectAttributes redirect) {
+    public String anyadirDireccion(Direccione direccion, Model model,
+                                   Authentication authentication, RedirectAttributes redirect) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
@@ -82,7 +82,7 @@ public class DireccionController {
         direcciones.add(direccion);
         usuario.setDirecciones(direcciones);
 
-        // Guardo el usuario.
+        // Guardo el usuario y devuelvo un mensaje a la vista.
         if (direccionService.guardarDireccion(direccion)) {
             if (usuarioService.actualizarUsuario(usuario)) {
                 redirect.addFlashAttribute("mensajeOk", "Dirección añadida correctamente");
@@ -104,7 +104,7 @@ public class DireccionController {
     /**
      * Este método recibe el id de una dirección y la elimina de la base de datos.
      * Para ello, recupera el usuario mediante Authentication y la dirección mediante el id.
-     * Seguidamente recupera la lista de direcciones del usuario y la borra de la lista.
+     * Seguidamente recupera la lista de direcciones del usuario y borra la dirección de la lista.
      * Ahora recupera la lista de usuarios de la dirección y lo borra de la lista.
      * Finalmente elimina la dirección de la bbdd y actualiza el listado de direcciones para la vista.
      */
@@ -127,7 +127,7 @@ public class DireccionController {
         direcciones.remove(direccion);
         usuario.setDirecciones(direcciones);
 
-        // Guardo los cambios en la base de datos.
+        // Guardo los cambios en la base de datos y envío un mensaje a la vista.
         if (direccionService.eliminarDireccion(idDireccion)) {
             redirect.addFlashAttribute("mensajeOk", "Dirección eliminada correctamente");
             model.addAttribute("direcciones", direcciones);

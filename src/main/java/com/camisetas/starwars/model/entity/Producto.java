@@ -1,18 +1,18 @@
 package com.camisetas.starwars.model.entity;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 
-/**
- * The persistent class for the productos database table.
- * 
- */
 @Entity
 @Table(name="productos")
 @NamedQuery(name="Producto.findAll", query="SELECT p FROM Producto p")
 public class Producto implements Serializable {
+
+
+	// Atributos
+
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -34,8 +34,16 @@ public class Producto implements Serializable {
 	@OneToMany(mappedBy="producto")
 	private List<PedidosProducto> pedidosProductos;
 
+
+	// Atributos
+
+
 	public Producto() {
 	}
+
+
+	// Getters y Setters
+
 
 	public int getIdProducto() {
 		return this.idProducto;
@@ -93,6 +101,10 @@ public class Producto implements Serializable {
 		this.pedidosProductos = pedidosProductos;
 	}
 
+
+	// Métodos
+
+
 	public PedidosProducto addPedidosProducto(PedidosProducto pedidosProducto) {
 		getPedidosProductos().add(pedidosProducto);
 		pedidosProducto.setProducto(this);
@@ -106,5 +118,23 @@ public class Producto implements Serializable {
 
 		return pedidosProducto;
 	}
+
+
+	// toString
+
+
+	@Override
+	public String toString() {
+		return "Producto{" +
+				"idProducto=" + idProducto +
+				", descripcion='" + descripcion + '\'' +
+				", imagen='" + imagen + '\'' +
+				", nombre='" + nombre + '\'' +
+				", precio=" + precio +
+				", stock=" + stock +
+				", pedidosProductos=" + pedidosProductos +
+				'}';
+	}
+
 
 }

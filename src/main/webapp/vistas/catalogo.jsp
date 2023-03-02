@@ -14,14 +14,17 @@
 </head>
 <body>
 
+
 <!-- Barra de navegación -->
 <jsp:include page="nav.jsp"></jsp:include>
+
 
 <!-- Portada -->
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://fondosmil.com/fondo/81720.jpg" class="d-block w-100" alt="imágen de portada para la página de inicio">
+            <img src="https://fondosmil.com/fondo/81720.jpg" class="d-block w-100"
+                 alt="imágen de portada para la página de inicio">
             <div class="carousel-caption d-none d-md-block">
                 <h1 class="display-1">Catálogo</h1>
                 <h1 class="display-5">Página de Catálogo.</h1>
@@ -30,12 +33,14 @@
     </div>
 </div>
 
+
 <!-- Título -->
 <figure class="text-center" style="padding: 50px 0 50px 0;">
     <h1 class="display-1">Todas nuestras camisetas</h1>
 </figure>
 
-<!-- Filtros -->
+
+<!-- Filtros & Buscador -->
 <div class="container text-center" style="margin-bottom: 50px;">
     <div class="row">
         <div class="col">
@@ -56,7 +61,7 @@
                     <select class="form-select" id="precio" name="precio">
                         <option selected>Precio</option>
                         <option value="asc">Más Caro Primero</option>
-                        <option value="desc                                                                                   ">
+                        <option value="desc">
                             Más Barato Primero
                         </option>
                     </select>
@@ -72,6 +77,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Productos -->
 <div class="container text-center">
@@ -111,8 +117,10 @@
     </div>
 </div>
 
+
 <!-- Footer -->
 <jsp:include page="footer.jsp"></jsp:include>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

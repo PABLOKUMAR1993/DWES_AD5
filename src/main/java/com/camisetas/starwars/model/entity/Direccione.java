@@ -1,18 +1,17 @@
 package com.camisetas.starwars.model.entity;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
 
 
-/**
- * The persistent class for the direcciones database table.
- * 
- */
 @Entity
 @Table(name="direcciones")
 @NamedQuery(name="Direccione.findAll", query="SELECT d FROM Direccione d")
 public class Direccione implements Serializable {
+
+
+	// Atributos
+
 
 	private static final long serialVersionUID = 1L;
 
@@ -42,8 +41,16 @@ public class Direccione implements Serializable {
 	@ManyToMany(mappedBy="direcciones")
 	private List<Usuario> usuarios;
 
+
+	// Constructores
+
+
 	public Direccione() {
 	}
+
+
+	// Getters y Setters
+
 
 	public int getIdDireccion() {
 		return this.idDireccion;
@@ -109,6 +116,18 @@ public class Direccione implements Serializable {
 		this.pedidos = pedidos;
 	}
 
+	public List<Usuario> getUsuarios() {
+		return this.usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+
+	// Métodos
+
+
 	public Pedido addPedido(Pedido pedido) {
 		getPedidos().add(pedido);
 		pedido.setDireccione(this);
@@ -123,12 +142,24 @@ public class Direccione implements Serializable {
 		return pedido;
 	}
 
-	public List<Usuario> getUsuarios() {
-		return this.usuarios;
+
+	// toString
+
+
+	@Override
+	public String toString() {
+		return "Direccione{" +
+				"idDireccion=" + idDireccion +
+				", calle='" + calle + '\'' +
+				", codigoPostal='" + codigoPostal + '\'' +
+				", letra='" + letra + '\'' +
+				", localidad='" + localidad + '\'' +
+				", numero=" + numero +
+				", piso=" + piso +
+				", pedidos=" + pedidos +
+				", usuarios=" + usuarios +
+				'}';
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
 
 }

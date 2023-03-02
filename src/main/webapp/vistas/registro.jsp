@@ -14,8 +14,10 @@
 </head>
 <body>
 
+
 <!-- Barra de navegación -->
 <jsp:include page="nav.jsp"></jsp:include>
+
 
 <!-- Portada -->
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
@@ -32,6 +34,7 @@
     </div>
 </div>
 
+
 <!-- Mensaje de Error -->
 <c:if test="${ mensajeEdad != null }">
     <div class="d-flex justify-content-center" style="margin-top: 50px;">
@@ -47,6 +50,7 @@
         </div>
     </div>
 </c:if>
+
 
 <!-- Formulario -->
 <div class="container-fluid" style="margin: 50px 0 20px 0">
@@ -89,6 +93,7 @@
     </div>
 </div>
 
+
 <!-- Registro -->
 <div class="d-flex justify-content-center">
     <blockquote class="blockquote">
@@ -96,8 +101,10 @@
     </blockquote>
 </div>
 
+
 <!-- Footer -->
 <jsp:include page="footer.jsp"></jsp:include>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

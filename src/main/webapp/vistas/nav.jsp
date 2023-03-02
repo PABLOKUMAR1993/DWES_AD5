@@ -14,6 +14,8 @@
 </head>
 <body>
 
+
+<!-- Navbar -->
 <nav class="navbar navbar-dark bg-dark">
     <div class="container-fluid">
         <a class="navbar-brand" href="/">
@@ -43,7 +45,8 @@
                         <a class="nav-link " aria-current="page" href="#">Carrito</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                           aria-expanded="false">
                             Mi Cuenta
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
@@ -69,6 +72,7 @@
         </div>
     </div>
 </nav>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"

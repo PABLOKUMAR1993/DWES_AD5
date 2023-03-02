@@ -1,17 +1,13 @@
 package com.camisetas.starwars.controller;
 import com.camisetas.starwars.model.entity.Producto;
-import com.camisetas.starwars.model.entity.Usuario;
 import com.camisetas.starwars.model.services.ProductoServiceInt;
-import com.camisetas.starwars.model.services.UsuarioServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-
-import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.List;
+
 
 @Controller
 public class HomeController {
@@ -29,19 +25,16 @@ public class HomeController {
 
     /**
      * Método que muestra la página de inicio.
-     * Dentro de este método, tenemos un listado de productos que se divide en dos, por un lado, los productos
-     * con id par y por otro lado los productos con id impar.
-     * Así mismo, se envían estos dos listados a la vista para que se muestren en la página de inicio,
-     * cada uno en una columna sin repetir productos.
-     *
-     * @param model Modelo de la página.
-     * @return Nombre de la vista.
+     * Para mostrar la página de inicio se necesita un lsitado con todos los productos, pero se quiere mostrar en dos
+     * montones, para ello se reparan los productos en dos listas, una con los productos pares y otra con los impares.
      */
     @GetMapping("/")
     public String index(Model model) {
 
         // Recupero la lista de productos.
         List<Producto> listado = pdao.buscarTodos();
+
+        // Creo las listas de productos.
         List<Producto> listadoImpares = new ArrayList<>();
         List<Producto> listadoPares = new ArrayList<>();
 

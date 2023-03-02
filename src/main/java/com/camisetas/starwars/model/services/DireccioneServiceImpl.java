@@ -19,6 +19,9 @@ public class DireccioneServiceImpl implements DireccioneServiceInt {
     // Métodos Implementados
 
 
+    /**
+     * Método que busca una dirección por su id.
+     */
     @Override
     public Direccione buscarPorId(int id) { return direccioneRepository.findById(id).orElse(null); }
 
@@ -38,6 +41,9 @@ public class DireccioneServiceImpl implements DireccioneServiceInt {
     }
 
 
+    /**
+     * Método que elimina una dirección de la base de datos.
+     */
     @Override
     public boolean eliminarDireccion(int idDireccion) {
         try {

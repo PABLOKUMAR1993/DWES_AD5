@@ -38,8 +38,8 @@ public class TarjetaController {
 
 
     /**
-     * Este método obtiene el usuario que tiene iniciada sesión,
-     * extrae de el las tarjetas que tiene y las envía a la vista mediante el modelo.
+     * Este método obtiene el usuario que tiene iniciada sesión, extrae de el las tarjetas que tiene y las envía
+     * a la vista mediante el modelo.
      */
     @GetMapping("/pago")
     public String pago(Authentication authentication, Model model) {
@@ -60,13 +60,13 @@ public class TarjetaController {
 
     /**
      * Método que recibe una tarjeta a través de un formulario y la añade a la base de datos.
-     * Para ello obtiene la tarjeta por RequestParam y seguidamente recupera el usuario mediante Authentication.
+     * Para ello obtiene la tarjeta por Param y seguidamente recupera el usuario mediante Authentication.
      * Ahora se cruzan los datos, a la tarjeta se le añade el usuario a la lista de usuarios y al usuario
      * se le añade la tarjeta a la lista de tarjetas, y se guardan los cambios en la base de datos.
      */
     @PostMapping("/anyadirTarjeta")
-    public String anyadirTarjeta(Tarjeta tarjeta, Model model,
-                                 RedirectAttributes redirect, Authentication authentication) {
+    public String anyadirTarjeta(Tarjeta tarjeta, Model model, RedirectAttributes redirect,
+                                 Authentication authentication) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
@@ -87,7 +87,7 @@ public class TarjetaController {
         tarjetas.add(tarjeta);
         usuario.setTarjetas(tarjetas);
 
-        // Guardo la tarjeta en la base de datos
+        // Guardo la tarjeta en la base de datos y mando mensaje de confirmación a la vista.
         if (tarjetaService.guardarTarjeta(tarjeta)) {
             if (usuarioService.actualizarUsuario(usuario)) {
                 redirect.addFlashAttribute("mensajeOk", "Tarjeta añadida correctamente");
@@ -108,7 +108,7 @@ public class TarjetaController {
     /**
      * Este método recibe el id de una tarjeta y la elimina de la base de datos.
      * Para ello, recupera el usuario mediante Authentication y la tarjeta mediante el id.
-     * Seguidamente recupera la lista de tarjetas del usuario y la borra de la lista.
+     * Seguídamente recupera la lista de tarjetas del usuario y la borra de esa lista.
      * Ahora recupera la lista de usuarios de la tarjeta y lo borra de la lista.
      * Finalmente elimina la tarjeta de la bbdd y actualiza el listado de tarjetas para la vista.
      */
@@ -144,6 +144,10 @@ public class TarjetaController {
 
     }
 
+
+    /**
+     * Este método es para als fechas.
+     */
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");

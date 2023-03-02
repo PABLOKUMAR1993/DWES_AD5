@@ -104,6 +104,18 @@ public class Tarjeta implements Serializable {
 		this.pedidos = pedidos;
 	}
 
+	public List<Usuario> getUsuarios() {
+		return this.usuarios;
+	}
+
+	public void setUsuarios(List<Usuario> usuarios) {
+		this.usuarios = usuarios;
+	}
+
+
+	// Métodos
+
+
 	public Pedido addPedido(Pedido pedido) {
 		getPedidos().add(pedido);
 		pedido.setTarjeta(this);
@@ -116,14 +128,6 @@ public class Tarjeta implements Serializable {
 		pedido.setTarjeta(null);
 
 		return pedido;
-	}
-
-	public List<Usuario> getUsuarios() {
-		return this.usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
 	}
 
 

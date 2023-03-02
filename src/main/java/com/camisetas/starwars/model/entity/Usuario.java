@@ -1,5 +1,4 @@
 package com.camisetas.starwars.model.entity;
-
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -7,14 +6,15 @@ import java.util.List;
 import java.util.Objects;
 
 
-/**
- * The persistent class for the usuarios database table.
- * 
- */
 @Entity
 @Table(name="usuarios")
 @NamedQuery(name="Usuario.findAll", query="SELECT u FROM Usuario u")
 public class Usuario implements Serializable {
+
+
+	// Atributos
+
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -79,6 +79,14 @@ public class Usuario implements Serializable {
 		)
 	private List<Tarjeta> tarjetas;
 
+
+	// Constructores
+
+
+	/**
+	 * Constructor por defecto.
+	 * Le pongo enable a 1 para que el usuario se pueda loguear.
+	 */
 	public Usuario() {
 		this.enabled = 1;
 	}
@@ -147,20 +155,6 @@ public class Usuario implements Serializable {
 		this.pedidos = pedidos;
 	}
 
-	public Pedido addPedido(Pedido pedido) {
-		getPedidos().add(pedido);
-		pedido.setUsuario(this);
-
-		return pedido;
-	}
-
-	public Pedido removePedido(Pedido pedido) {
-		getPedidos().remove(pedido);
-		pedido.setUsuario(null);
-
-		return pedido;
-	}
-
 	public List<Direccione> getDirecciones() {
 		return this.direcciones;
 	}
@@ -185,6 +179,25 @@ public class Usuario implements Serializable {
 		this.tarjetas = tarjetas;
 	}
 
+
+	// Métodos
+
+
+	public Pedido addPedido(Pedido pedido) {
+		getPedidos().add(pedido);
+		pedido.setUsuario(this);
+
+		return pedido;
+	}
+
+	public Pedido removePedido(Pedido pedido) {
+		getPedidos().remove(pedido);
+		pedido.setUsuario(null);
+
+		return pedido;
+	}
+
+
 	// hashCode & equals
 
 
@@ -199,6 +212,7 @@ public class Usuario implements Serializable {
 	public int hashCode() {
 		return Objects.hash(getEmail());
 	}
+
 
 	// toString
 
@@ -215,4 +229,6 @@ public class Usuario implements Serializable {
 				", nombre='" + nombre + '\'' +
 				'}';
 	}
+
+
 }
