@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
@@ -23,9 +22,8 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://4kwallpapers.com/images/wallpapers/sith-star-wars-lightsaber-dark-background-2880x1800-5554.jpg"
-                 class="d-block w-100"
-                 alt="imágen de portada para la página de inicio">
+            <img src="https://wallpaperaccess.com/full/11792.jpg"
+                 class="d-block w-100" alt="imágen de portada para la página de inicio">
             <div class="carousel-caption d-none d-md-block">
                 <h1 class="display-1">Pedidos</h1>
                 <h1 class="display-5">Aquí tienes tu historial de pedidos.</h1>
@@ -77,56 +75,62 @@
                         <div class="row">
                             <div class="col">
                                 <c:forEach items="${pedidos}" var="pedido">
-                                    <div class="card w-100" style="margin: 0 0 25px 0;">
-                                        <div class="card-body">
-                                            <table class="table table-striped">
-                                                <thead>
-                                                <tr>
-                                                    <th>#</th>
-                                                    <th>Fecha</th>
-                                                    <th>Estado</th>
-                                                    <th>Total</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>${pedido.idPedido}</td>
-                                                    <td>${pedido.fecha}</td>
-                                                    <td>${pedido.estado}</td>
-                                                    <td>total</td>
-                                                </tr>
-                                                <tr>
-                                                    <td colspan="4">
-                                                        <table class="table mb-0">
-                                                            <tbody>
-                                                            <tr>
-                                                                <th>Imagen</th>
-                                                                <th>Nombre</th>
-                                                                <th>Precio</th>
-                                                                <th>Cantidad</th>
-                                                            </tr>
-                                                            <c:forEach items="${infoList}" var="infoListo">
-                                                                <c:if test="${infoListo.idPedido == pedido.idPedido}">
-                                                                    <tr>
-                                                                        <td>
-                                                                            <img src="${infoListo.imagen}"
-                                                                                 alt="imagen de la camiseta"
-                                                                                 style="width: 100px; height: 100px;">
-                                                                        </td>
-                                                                        <td>${infoListo.nombreProducto}</td>
-                                                                        <td>${infoListo.precioUnitario}</td>
-                                                                        <td>${infoListo.cantidad}</td>
-                                                                    </tr>
-                                                                </c:if>
-                                                            </c:forEach>
-                                                            </tbody>
-                                                        </table>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
+                                    <c:if test="${pedido.estado == 'completado'}">
+                                        <div class="card w-100" style="margin: 0 0 25px 0;">
+                                            <div class="card-body">
+                                                <table class="table table-striped">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>#</th>
+                                                        <th>Fecha</th>
+                                                        <th>Estado</th>
+                                                        <th>Total</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                    <tr>
+                                                        <td>${pedido.idPedido}</td>
+                                                        <td>${pedido.fecha}</td>
+                                                        <td>${pedido.estado}</td>
+                                                        <c:forEach var="total" items="${totales}">
+                                                            <c:if test="${total.idPedido == pedido.idPedido}">
+                                                                <td>${total.totalPedido} $</td>
+                                                            </c:if>
+                                                        </c:forEach>
+                                                    </tr>
+                                                    <tr>
+                                                        <td colspan="4">
+                                                            <table class="table mb-0">
+                                                                <tbody>
+                                                                <tr>
+                                                                    <th>Imagen</th>
+                                                                    <th>Nombre</th>
+                                                                    <th>Precio</th>
+                                                                    <th>Cantidad</th>
+                                                                </tr>
+                                                                <c:forEach items="${infoList}" var="infoListo">
+                                                                    <c:if test="${infoListo.idPedido == pedido.idPedido}">
+                                                                        <tr>
+                                                                            <td>
+                                                                                <img src="${infoListo.imagen}"
+                                                                                     alt="imagen de la camiseta"
+                                                                                     style="width: 100px; height: 100px;">
+                                                                            </td>
+                                                                            <td class="align-middle">${infoListo.nombreProducto}</td>
+                                                                            <td class="align-middle">${infoListo.precioUnitario}</td>
+                                                                            <td class="align-middle">${infoListo.cantidad}</td>
+                                                                        </tr>
+                                                                    </c:if>
+                                                                </c:forEach>
+                                                                </tbody>
+                                                            </table>
+                                                        </td>
+                                                    </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </c:if>
                                 </c:forEach>
                             </div>
                         </div>

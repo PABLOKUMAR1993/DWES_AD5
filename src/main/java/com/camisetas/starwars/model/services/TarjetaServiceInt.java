@@ -8,6 +8,7 @@ public interface TarjetaServiceInt {
     Tarjeta buscarTarjetaPorId(int idTarjeta);
     boolean guardarTarjeta(Tarjeta tarjeta);
     boolean eliminarTarjeta(int idTarjeta);
+    boolean actualizarTarjeta(Tarjeta tarjeta);
 
 
 }

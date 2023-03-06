@@ -1,7 +1,7 @@
 package com.camisetas.starwars.controller;
-import com.camisetas.starwars.model.entity.Role;
+import com.camisetas.starwars.model.entity.Rol;
 import com.camisetas.starwars.model.entity.Usuario;
-import com.camisetas.starwars.model.services.RoleServiceInt;
+import com.camisetas.starwars.model.services.RolServiceInt;
 import com.camisetas.starwars.model.services.UsuarioServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
@@ -28,7 +28,7 @@ public class UsuarioController {
     private UsuarioServiceInt usuarioService;
 
     @Autowired
-    private RoleServiceInt roleService;
+    private RolServiceInt roleService;
 
 
     // Métodos
@@ -45,7 +45,7 @@ public class UsuarioController {
     public String crearCliente(Model model, RedirectAttributes redirect, Usuario usuario) {
 
         // Le agregamos por defecto el rol de cliente
-        List<Role> roles = new ArrayList<>();
+        List<Rol> roles = new ArrayList<>();
         roles.add(roleService.buscarPorId(1));
         usuario.setRoles(roles);
 

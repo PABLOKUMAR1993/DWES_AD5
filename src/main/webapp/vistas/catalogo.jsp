@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
@@ -60,10 +59,8 @@
                     <label class="visually-hidden" for="precio">Precio</label>
                     <select class="form-select" id="precio" name="precio">
                         <option selected>Precio</option>
-                        <option value="asc">Más Caro Primero</option>
-                        <option value="desc">
-                            Más Barato Primero
-                        </option>
+                        <option value="asc">Más Barato Primero</option>
+                        <option value="desc">Más Caro Primero</option>
                     </select>
                 </div>
                 <div class="col-auto">
@@ -79,7 +76,27 @@
 </div>
 
 
-<!-- Productos -->
+<!-- Sin Resultados de Búsqueda -->
+<c:if test="${empty(listadoImpares) && empty(listadoPares)}">
+    <div class="d-flex justify-content-center" style="margin: 50px 0 50px 0;">
+        <div class="container">
+            <div class="card text-center">
+                <div class="card-header">
+                    Resultados de Búsqueda
+                </div>
+                <div class="card-body" style="margin: 25px 0 25px 0;">
+                    <h5 class="card-title">¡Oh vaya! Parece que no hay ningún resultado para tu búsqueda.</h5>
+                    <p class="card-text">
+                        Prueba a buscar con término distinto.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</c:if>
+
+
+<!-- Resultados -->
 <div class="container text-center">
     <div class="row">
         <div class="col">

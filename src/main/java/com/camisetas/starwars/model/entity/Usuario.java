@@ -1,6 +1,7 @@
 package com.camisetas.starwars.model.entity;
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -36,12 +37,8 @@ public class Usuario implements Serializable {
 
 	private String nombre;
 
-	//bi-directional many-to-one association to Pedido
-	@OneToMany(mappedBy="usuario")
-	private List<Pedido> pedidos;
-
-	//bi-directional many-to-many association to Direccione
-	@ManyToMany
+	//uni-directional many-to-many association to Direccion
+	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 		name="usuarios_direcciones"
 		, joinColumns={
@@ -51,9 +48,9 @@ public class Usuario implements Serializable {
 			@JoinColumn(name="id_direccion")
 			}
 		)
-	private List<Direccione> direcciones;
+	private List<Direccion> direcciones;
 
-	//bi-directional many-to-many association to Role
+	//uni-directional many-to-many association to Rol
 	@ManyToMany
 	@JoinTable(
 		name="usuarios_roles"
@@ -64,10 +61,10 @@ public class Usuario implements Serializable {
 			@JoinColumn(name="id_rol")
 			}
 		)
-	private List<Role> roles;
+	private List<Rol> roles;
 
-	//bi-directional many-to-many association to Tarjeta
-	@ManyToMany
+	//uni-directional many-to-many association to Tarjeta
+	@ManyToMany(cascade={CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinTable(
 		name="usuarios_tarjetas"
 		, joinColumns={
@@ -80,16 +77,14 @@ public class Usuario implements Serializable {
 	private List<Tarjeta> tarjetas;
 
 
-	// Constructores
+	// Constructor
 
 
-	/**
-	 * Constructor por defecto.
-	 * Le pongo enable a 1 para que el usuario se pueda loguear.
-	 */
-	public Usuario() {
-		this.enabled = 1;
-	}
+	public Usuario() { this.enabled = 1; }
+
+
+	// Getters y Setters
+
 
 	public int getIdUsuario() {
 		return this.idUsuario;
@@ -147,27 +142,19 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public List<Pedido> getPedidos() {
-		return this.pedidos;
-	}
-
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-
-	public List<Direccione> getDirecciones() {
+	public List<Direccion> getDirecciones() {
 		return this.direcciones;
 	}
 
-	public void setDirecciones(List<Direccione> direcciones) {
+	public void setDirecciones(List<Direccion> direcciones) {
 		this.direcciones = direcciones;
 	}
 
-	public List<Role> getRoles() {
+	public List<Rol> getRoles() {
 		return this.roles;
 	}
 
-	public void setRoles(List<Role> roles) {
+	public void setRoles(List<Rol> roles) {
 		this.roles = roles;
 	}
 
@@ -183,23 +170,38 @@ public class Usuario implements Serializable {
 	// Métodos
 
 
-	public Pedido addPedido(Pedido pedido) {
-		getPedidos().add(pedido);
-		pedido.setUsuario(this);
-
-		return pedido;
+	public void addDireccion(Direccion direccion) {
+		if (direcciones == null) direcciones = new ArrayList<>();
+		direcciones.add(direccion);
 	}
 
-	public Pedido removePedido(Pedido pedido) {
-		getPedidos().remove(pedido);
-		pedido.setUsuario(null);
+	public void removeDireccion(Direccion direccion) {
+		if (direcciones == null) direcciones = new ArrayList<>();
+		direcciones.remove(direccion);
+	}
 
-		return pedido;
+	public void addRol(Rol rol) {
+		if (roles == null) roles = new ArrayList<>();
+		roles.add(rol);
+	}
+
+	public void removeRol(Rol rol) {
+		if (roles == null) roles = new ArrayList<>();
+		roles.remove(rol);
+	}
+
+	public void addTarjeta(Tarjeta tarjeta) {
+		if (tarjetas == null) tarjetas = new ArrayList<>();
+		tarjetas.add(tarjeta);
+	}
+
+	public void removeTarjeta(Tarjeta tarjeta) {
+		if (tarjetas == null) tarjetas = new ArrayList<>();
+		tarjetas.remove(tarjeta);
 	}
 
 
-	// hashCode & equals
-
+	// hashCode y equals
 
 	@Override
 	public boolean equals(Object o) {
@@ -227,6 +229,9 @@ public class Usuario implements Serializable {
 				", enabled=" + enabled +
 				", fechaNacimiento=" + fechaNacimiento +
 				", nombre='" + nombre + '\'' +
+				", direcciones=" + direcciones +
+				", roles=" + roles +
+				", tarjetas=" + tarjetas +
 				'}';
 	}
 

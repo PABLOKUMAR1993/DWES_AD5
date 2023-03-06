@@ -6,7 +6,7 @@ import java.util.List;
 public interface ProductoServiceInt {
 
 
-    List<Producto> buscarTodos();
+    List<Producto> buscarTodo();
     List<Producto> filtroParaCatalogo(String alfabetico, String precio, String busqueda);
     Producto buscarPorId(int id);
     List<Producto> buscarProductosPorIds(List<Integer> ids);

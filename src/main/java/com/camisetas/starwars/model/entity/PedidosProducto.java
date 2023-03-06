@@ -1,6 +1,8 @@
 package com.camisetas.starwars.model.entity;
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
+import java.util.Objects;
+import javax.persistence.*;
 
 
 @Entity
@@ -14,49 +16,52 @@ public class PedidosProducto implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	@EmbeddedId
-	private PedidosProductoPK id;
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="numero_orden")
+	private int numeroOrden;
 
-	@Column(name="precio_unitario")
-	private double precioUnitario;
+	@Column(name="precio")
+	private double precio;
 
 	private int unidades;
 
 	//bi-directional many-to-one association to Pedido
+	@JoinColumn(name="id_pedido")
 	@ManyToOne
-	@JoinColumn(name="id_pedido", insertable=false, updatable=false)
+	@JsonIgnore
 	private Pedido pedido;
 
-	//bi-directional many-to-one association to Producto
-	@ManyToOne
-	@JoinColumn(name="id_producto", insertable=false, updatable=false)
+	//uni-directional many-to-one association to Producto
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="id_producto")
+	@JsonIgnore
 	private Producto producto;
 
 
-	// Constructores
+	// Constructor
 
 
-	public PedidosProducto() {
-	}
+	public PedidosProducto() {}
 
 
 	// Getters y Setters
 
 
-	public PedidosProductoPK getId() {
-		return this.id;
+	public int getNumeroOrden() {
+		return this.numeroOrden;
 	}
 
-	public void setId(PedidosProductoPK id) {
-		this.id = id;
+	public void setNumeroOrden(int numeroOrden) {
+		this.numeroOrden = numeroOrden;
 	}
 
-	public double getPrecioUnitario() {
-		return this.precioUnitario;
+	public double getPrecio() {
+		return this.precio;
 	}
 
-	public void setPrecioUnitario(double precioUnitario) {
-		this.precioUnitario = precioUnitario;
+	public void setPrecio(double precio) {
+		this.precio = precio;
 	}
 
 	public int getUnidades() {
@@ -84,16 +89,32 @@ public class PedidosProducto implements Serializable {
 	}
 
 
+	// hashCode y equals
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof PedidosProducto that)) return false;
+		return getNumeroOrden() == that.getNumeroOrden();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getNumeroOrden());
+	}
+
+
 	// toString
 
 
 	@Override
 	public String toString() {
 		return "PedidosProducto{" +
-				"id=" + id +
-				", precioUnitario=" + precioUnitario +
+				"numeroOrden=" + numeroOrden +
+				", precio=" + precio +
 				", unidades=" + unidades +
-				", pedido=" + pedido +
+//				", pedido=" + pedido +
 				", producto=" + producto +
 				'}';
 	}

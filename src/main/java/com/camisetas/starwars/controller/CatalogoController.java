@@ -19,7 +19,7 @@ public class CatalogoController {
 
 
     @Autowired
-    private ProductoServiceInt productoSerice;
+    private ProductoServiceInt productoService;
 
 
     // Métodos
@@ -29,26 +29,28 @@ public class CatalogoController {
      * Método que muestra la página de Catálogo.
      * En esta página se mostrará por defecto un listado de todos los productos que hay en la base de datos.
      * Al recibir el listado, lo divide en dos, para hacer dos columnas de productos.
-     * En una columna los ID pares y en la otra los ID impares.
+     * En una columna los pares y en la otra los impares.
      * Envía estos dos listados a la vista mediante el modelo.
      */
     @GetMapping("/catalogo")
     public String catalogo(Model model) {
 
         // Listado de todos los productos.
-        List<Producto> listado = productoSerice.buscarTodos();
+        List<Producto> listado = productoService.buscarTodo();
 
-        // Listado de productos con ID impar y par.
+        // Listados de productos para impares y pares.
         List<Producto> listadoImpares = new ArrayList<>();
         List<Producto> listadoPares = new ArrayList<>();
 
         // Recorremos el listado de productos y lo repartimos.
+        int i = 0;
         for (Producto producto : listado) {
-            if (producto.getIdProducto() % 2 == 0) {
+            if (i % 2 == 0) {
                 listadoPares.add(producto);
             } else {
                 listadoImpares.add(producto);
             }
+            i++;
         }
 
         // Enviamos los listados a la vista.
@@ -61,8 +63,8 @@ public class CatalogoController {
 
     /**
      * Este método recibe los parámetros de la vista de Catálogo.
-     * Los parametros son: alfabetico, precio y busqueda.
-     * En base a esos parametos hace una consulta a la base de datos y devuelve un listado de productos filtrado.
+     * Los parámetros son: alfabético, precio y búsqueda.
+     * Basándose en esos parámetros hace una consulta a la base de datos y devuelve un listado de productos filtrado.
      * Igual que en el método anterior, divide el listado en dos y lo envía a la vista.
      *
      * @param alfabetico Parámetro de ordenación alfabética. Puede ser "asc" o "desc".
@@ -74,7 +76,7 @@ public class CatalogoController {
                                  @RequestParam("precio") String precio, @RequestParam("busqueda") String busqueda) {
 
         // Listado de productos filtrado.
-        List<Producto> listado = productoSerice.filtroParaCatalogo(alfabetico, precio, busqueda);
+        List<Producto> listado = productoService.filtroParaCatalogo(alfabetico, precio, busqueda);
 
         // Listado de productos con ID impar y par.
         List<Producto> listadoImpares = new ArrayList<>();
@@ -110,12 +112,13 @@ public class CatalogoController {
     public String catalogoDetalles(Model model, @PathVariable("id") int id) {
 
         // Buscamos el producto por su ID.
-        Producto producto = productoSerice.buscarPorId(id);
+        Producto producto = productoService.buscarPorId(id);
 
         // Enviamos el producto a la vista.
         model.addAttribute("producto", producto);
         return "producto";
 
     }
+
 
 }

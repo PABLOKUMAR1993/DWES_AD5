@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-
 <!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
@@ -24,12 +22,12 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://4kwallpapers.com/images/wallpapers/sith-star-wars-lightsaber-dark-background-2880x1800-5554.jpg"
+            <img src="https://wallpapercave.com/wp/wp2967253.jpg"
                  class="d-block w-100"
                  alt="imágen de portada para la página de inicio">
             <div class="carousel-caption d-none d-md-block">
                 <h1 class="display-1">Direcciones de Envío</h1>
-                <h1 class="display-5">Puedes gestionar aquí tus direcciones de envío.</h1>
+                <h1 class="display-5">Puedes gestionar aquí tus direccions de envío.</h1>
             </div>
         </div>
     </div>
@@ -43,13 +41,6 @@
 
 
 <!-- Alertas al crear o eliminar tarjetas -->
-<c:if test="${ errorParcial != null }">
-    <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
-        <div class="alert alert-danger" role="alert">
-                ${ errorParcial }
-        </div>
-    </div>
-</c:if>
 <c:if test="${ error != null }">
     <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
         <div class="alert alert-danger" role="alert">
@@ -66,7 +57,7 @@
 </c:if>
 
 
-<!-- Si no tienes direcciones ves esto -->
+<!-- Si no tienes direccions ves esto -->
 <c:if test="${direcciones == '[]'}">
     <div class="d-flex justify-content-center" style="margin: 50px 0 50px 0;">
         <div class="container">
@@ -82,7 +73,7 @@
                 </div>
                 <div class="card-footer text-muted">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#anyadirTarjeta" style="margin: 10px 0 10px 0;">
+                            data-bs-target="#anyadirDireccion" style="margin: 10px 0 10px 0;">
                         Añadir Dirección
                     </button>
                 </div>
@@ -92,7 +83,7 @@
 </c:if>
 
 
-<!-- Si tienes direcciones ves esto -->
+<!-- Si tienes direccions ves esto -->
 <c:if test="${direcciones != '[]'}">
     <div class="d-flex justify-content-center" style="margin: 100px 0 100px 0;">
         <div class="container">
@@ -123,6 +114,10 @@
                                                         style="margin: 10px 10px 10px 0;">
                                                     Eliminar Dirección
                                                 </button>
+                                                <a href="/editarDireccion/${direccion.idDireccion}"
+                                                   class="btn btn-warning">
+                                                    Editar Dirección
+                                                </a>
                                             </form>
                                             </button>
                                         </div>
@@ -144,7 +139,7 @@
 </c:if>
 
 
-<!-- Modal para añadir direcciones -->
+<!-- Modal para añadir direccions -->
 <div class="modal fade" id="anyadirDireccion" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -154,7 +149,6 @@
             </div>
             <form method="post" action="/anyadirDireccion">
                 <div class="modal-body">
-
                     <div class="mb-3">
                         <label for="localidad" class="form-label">Localidad</label>
                         <input type="text" class="form-control" id="localidad" name="localidad"
@@ -190,7 +184,7 @@
                     <div class="mb-3">
                         <label for="piso" class="form-label">Piso</label>
                         <input type="number" class="form-control" id="piso" name="piso"
-                               aria-describedby="emailHelp" required>
+                               aria-describedby="emailHelp">
                         <div id="pisoAyuda" class="form-text">
                             Si procede, indica en que piso vives.
                         </div>
@@ -199,7 +193,7 @@
                         <label for="letra" class="form-label">Letra</label>
                         <input type="text" class="form-control" id="letra" name="letra"
                                aria-describedby="emailHelp">
-                        <div id="letraAyuda" class="form-text" required>
+                        <div id="letraAyuda" class="form-text">
                             Si procede, indica la letra de tu puerta en el edificio.
                         </div>
                     </div>

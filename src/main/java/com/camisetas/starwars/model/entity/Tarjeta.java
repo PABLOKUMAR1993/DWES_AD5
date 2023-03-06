@@ -1,16 +1,10 @@
 package com.camisetas.starwars.model.entity;
-
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 import java.util.Objects;
 
 
-/**
- * The persistent class for the tarjetas database table.
- * 
- */
 @Entity
 @Table(name="tarjetas")
 @NamedQuery(name="Tarjeta.findAll", query="SELECT t FROM Tarjeta t")
@@ -37,23 +31,14 @@ public class Tarjeta implements Serializable {
 
 	private String numero;
 
-	//bi-directional many-to-one association to Pedido
-	@OneToMany(mappedBy="tarjeta")
-	private List<Pedido> pedidos;
-
-	//bi-directional many-to-many association to Usuario
-	@ManyToMany(mappedBy="tarjetas")
-	private List<Usuario> usuarios;
-
 
 	// Constructor
 
 
-	public Tarjeta() {
-	}
+	public Tarjeta() {}
 
 
-	// Getters & Setters
+	// Getters y Setters
 
 
 	public int getIdTarjeta() {
@@ -96,42 +81,8 @@ public class Tarjeta implements Serializable {
 		this.numero = numero;
 	}
 
-	public List<Pedido> getPedidos() {
-		return this.pedidos;
-	}
 
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-
-	public List<Usuario> getUsuarios() {
-		return this.usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
-
-
-	// Métodos
-
-
-	public Pedido addPedido(Pedido pedido) {
-		getPedidos().add(pedido);
-		pedido.setTarjeta(this);
-
-		return pedido;
-	}
-
-	public Pedido removePedido(Pedido pedido) {
-		getPedidos().remove(pedido);
-		pedido.setTarjeta(null);
-
-		return pedido;
-	}
-
-
-	// HashCode & Equals
+	// hashCode y equals
 
 
 	@Override
@@ -158,8 +109,6 @@ public class Tarjeta implements Serializable {
 				", fechaCaducidad=" + fechaCaducidad +
 				", nombre='" + nombre + '\'' +
 				", numero='" + numero + '\'' +
-				", pedidos=" + pedidos +
-				", usuarios=" + usuarios +
 				'}';
 	}
 

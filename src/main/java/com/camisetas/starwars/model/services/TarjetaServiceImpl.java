@@ -30,23 +30,16 @@ public class TarjetaServiceImpl implements TarjetaServiceInt {
 
     /**
      * Método que guarda una tarjeta en la base de datos.
-     * Comprueba si existe otra igual, si no existe, la guarda.
      */
     @Override
     public boolean guardarTarjeta(Tarjeta tarjeta) {
 
-        if (tarjetaRepository.buscarPorNumero(tarjeta.getNumero()) != null) {
-            System.out.println("Ya existe una tarjeta con ese número");
+        try {
+            tarjetaRepository.save(tarjeta);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
             return false;
-        } else {
-            try {
-                System.out.println("tarjeta guardada");
-                tarjetaRepository.save(tarjeta);
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-                return false;
-            }
         }
 
     }
@@ -66,6 +59,21 @@ public class TarjetaServiceImpl implements TarjetaServiceInt {
             return false;
         }
 
+    }
+
+
+    /**
+     * Método que actualiza una tarjeta de la base de datos.
+     */
+    @Override
+    public boolean actualizarTarjeta(Tarjeta tarjeta) {
+        try {
+            tarjetaRepository.save(tarjeta);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
 }

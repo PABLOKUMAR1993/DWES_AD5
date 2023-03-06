@@ -1,17 +1,14 @@
 package com.camisetas.starwars.controller;
-import com.camisetas.starwars.model.entity.Direccione;
+import com.camisetas.starwars.model.entity.Direccion;
 import com.camisetas.starwars.model.entity.Usuario;
-import com.camisetas.starwars.model.services.DireccioneServiceInt;
+import com.camisetas.starwars.model.services.DireccionServiceInt;
 import com.camisetas.starwars.model.services.UsuarioServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,7 +23,7 @@ public class DireccionController {
     private UsuarioServiceInt usuarioService;
 
     @Autowired
-    private DireccioneServiceInt direccionService;
+    private DireccionServiceInt direccionService;
 
 
     // Métodos
@@ -37,14 +34,14 @@ public class DireccionController {
      * a la vista mediante el modelo.
      */
     @GetMapping("/direcciones")
-    public String direcciones(Authentication authentication, Model model) {
+    public String direcciones(Authentication aut, Model model) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
-        if (authentication != null) usuario = usuarioService.buscarPorEmail(authentication.getName());
+        if (aut != null) usuario = usuarioService.buscarPorEmail(aut.getName());
 
         // Recupero las direcciones del usuario.
-        List<Direccione> direcciones = usuario.getDirecciones();
+        List<Direccion> direcciones = usuario.getDirecciones();
 
         // Envío las direcciones a la vista.
         model.addAttribute("direcciones", direcciones);
@@ -54,47 +51,44 @@ public class DireccionController {
 
 
     /**
-     * Método que recibe una dirección a través de un formulario y la añade a la base de datos.
-     * Para ello obtiene la dirección por RequestParam y seguidamente recupera el usuario mediante Authentication.
-     * Ahora se cruzan los datos, a la dirección se le añade el usuario a la lista de usuarios y al usuario
-     * se le añade la dirección a la lista de direcciones, y se guardan los cambios en la base de datos.
+     * Este método recibe los datos de una dirección y la añade al usuario que tiene iniciada sesión.
+     * Importante comentar que en lugar de recibir una direccion estoy recibiendo los datos de la dirección,
+     * esto es así porque dentro de la dirección hay datos que son opcionales y me veo en la obligación de
+     * hacerlo de este modo para comprobar que datos llegan antes de construir el objeto direccion.
      */
     @PostMapping("/anyadirDireccion")
-    public String anyadirDireccion(Direccione direccion, Model model,
-                                   Authentication authentication, RedirectAttributes redirect) {
+    public String anyadirDireccion(@RequestParam("localidad") String localidad, @RequestParam("calle") String calle,
+                                   @RequestParam("numero") int numero, @RequestParam("codigoPostal") String codigoPostal,
+                                   @RequestParam(name = "piso", required = false) Integer piso,
+                                   @RequestParam(name = "letra", required = false) String letra,
+                                   Authentication aut, Model model, RedirectAttributes flash) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
-        if (authentication != null) usuario = usuarioService.buscarPorEmail(authentication.getName());
+        if (aut != null) usuario = usuarioService.buscarPorEmail(aut.getName());
 
-        // Añado el usuario a la lista de usuarios de la dirección.
-        List<Usuario> usuarios;
-        if (direccion.getUsuarios() != null) {
-            usuarios = direccion.getUsuarios();
+        // Creo la dirección usando el constructor que corresponda según si ha rellenado los datos opcionales o no.
+        Direccion direccion;
+        if (piso == null) {
+            direccion = new Direccion(calle, codigoPostal, localidad, numero);
         } else {
-            usuarios = new ArrayList<>();
+            direccion = new Direccion(calle, codigoPostal, letra, localidad, numero, piso);
         }
-        usuarios.add(usuario);
-        direccion.setUsuarios(usuarios);
 
-        // Añado la dirección a la lista de direcciones del usuario.
-        List<Direccione> direcciones = usuario.getDirecciones();
-        direcciones.add(direccion);
-        usuario.setDirecciones(direcciones);
+        // Añado la dirección al usuario.
+        usuario.addDireccion(direccion);
 
-        // Guardo el usuario y devuelvo un mensaje a la vista.
-        if (direccionService.guardarDireccion(direccion)) {
-            if (usuarioService.actualizarUsuario(usuario)) {
-                redirect.addFlashAttribute("mensajeOk", "Dirección añadida correctamente");
-                // Actualizo el listado de direcciones.
-                model.addAttribute("direcciones", direcciones);
-                return "redirect:/direcciones";
-            }
-            redirect.addFlashAttribute("mensajeParcial",
-                    "Dirección añadida correctamente, pero no se ha creado la relación con el usuario");
+        // Actualizo el usuario en la BBDD.
+        if (usuarioService.actualizarUsuario(usuario)) {
+            // Envío un mensaje de éxito.
+            flash.addFlashAttribute("mensajeOk", "Dirección añadida correctamente.");
+            // Actualizo la lista de direcciones del usuario.
+            List<Direccion> direcciones = usuario.getDirecciones();
+            model.addAttribute("direcciones", direcciones);
             return "redirect:/direcciones";
         } else {
-            redirect.addFlashAttribute("mensajeError", "No se ha podido añadir la dirección");
+            // Envío un mensaje de error.
+            flash.addFlashAttribute("mensajeError", "Error al añadir la dirección.");
             return "redirect:/direcciones";
         }
 
@@ -102,39 +96,80 @@ public class DireccionController {
 
 
     /**
-     * Este método recibe el id de una dirección y la elimina de la base de datos.
-     * Para ello, recupera el usuario mediante Authentication y la dirección mediante el id.
-     * Seguidamente recupera la lista de direcciones del usuario y borra la dirección de la lista.
-     * Ahora recupera la lista de usuarios de la dirección y lo borra de la lista.
-     * Finalmente elimina la dirección de la bbdd y actualiza el listado de direcciones para la vista.
+     * Este método recibe el id de una dirección y la elimina del usuario que tiene iniciada sesión.
      */
     @PostMapping("/eliminarDireccion/{id}")
-    public String eliminarDireccion(@PathVariable(name="id") int idDireccion, Authentication authentication,
-                                    RedirectAttributes redirect, Model model) {
+    public String anyadirDireccion(@PathVariable(name="id") int idDireccion, Authentication aut, Model model,
+                                   RedirectAttributes flash) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
-        if (authentication != null) usuario = usuarioService.buscarPorEmail(authentication.getName());
+        if (aut != null) usuario = usuarioService.buscarPorEmail(aut.getName());
 
-        // Elimino el usuario de la lista de usuarios de la dirección.
-        Direccione direccion = direccionService.buscarPorId(idDireccion);
-        List<Usuario> usuarios = direccion.getUsuarios();
-        usuarios.remove(usuario);
-        direccion.setUsuarios(usuarios);
+        // Recupero la dirección.
+        Direccion direccion = direccionService.buscarPorId(idDireccion);
 
-        // Elimino la dirección de la lista de direcciones del usuario.
-        List<Direccione> direcciones = usuario.getDirecciones();
-        direcciones.remove(direccion);
-        usuario.setDirecciones(direcciones);
+        // Elimino la dirección del usuario.
+        usuario.removeDireccion(direccion);
 
-        // Guardo los cambios en la base de datos y envío un mensaje a la vista.
-        if (direccionService.eliminarDireccion(idDireccion)) {
-            redirect.addFlashAttribute("mensajeOk", "Dirección eliminada correctamente");
-            model.addAttribute("direcciones", direcciones);
+        // Actualizo el usuario en la BBDD.
+        if (usuarioService.actualizarUsuario(usuario)) {
+            //Si es ok, se habrá eliminado la relación, ahora elimino la dirección.
+            if (direccionService.eliminarDireccion(direccion.getIdDireccion())) {
+                // Envío un mensaje de éxito.
+                flash.addFlashAttribute("mensajeOk", "Dirección eliminada correctamente.");
+                // Actualizo la lista de direcciones del usuario para la vista.
+                List<Direccion> direcciones = usuario.getDirecciones();
+                model.addAttribute("direcciones", direcciones);
+                return "redirect:/direcciones";
+            } else {
+                // Envío un mensaje de error.
+                flash.addFlashAttribute("mensajeError",
+                        "Error al eliminar la dirección. Se ha eliminado la relación, pero no la dirección.");
+                return "redirect:/direcciones";
+            }
+        } else {
+            // Envío un mensaje de error.
+            flash.addFlashAttribute("mensajeError", "Error al eliminar la dirección.");
+            return "redirect:/direcciones";
+        }
+
+    }
+
+
+    /**
+     * Este método recibe el id de una dirección y la envía a la vista para que el usuario pueda editarla.
+     */
+    @GetMapping("/editarDireccion/{id}")
+    public String editarDireccion(@PathVariable("id") int idDireccion, Model model, RedirectAttributes flash) {
+
+        // Recupero la dirección.
+        Direccion direccion = direccionService.buscarPorId(idDireccion);
+
+        // Envío la dirección a la vista.
+        model.addAttribute("direccion", direccion);
+        return "editarDireccion";
+
+    }
+
+
+    /**
+     * Este método recibe los datos de una dirección y la actualiza en la BBDD.
+     */
+    @PostMapping("/editarDireccion/{id}")
+    public String editarDireccion(@PathVariable("id") int idDireccion, Direccion direccion, RedirectAttributes flash) {
+
+        // Le asigno el id de la dirección que se va a editar.
+        direccion.setIdDireccion(idDireccion);
+
+        // Actualizo la dirección en la BBDD.
+        if (direccionService.actualizarDireccion(direccion)) {
+            // Envío un mensaje de éxito.
+            flash.addFlashAttribute("mensajeOk", "Dirección editada correctamente.");
             return "redirect:/direcciones";
         } else {
-            redirect.addFlashAttribute("error", "No se ha podido eliminar la dirección");
-            model.addAttribute("direcciones", direcciones);
+            // Envío un mensaje de error.
+            flash.addFlashAttribute("mensajeError", "Error al editar la dirección.");
             return "redirect:/direcciones";
         }
 

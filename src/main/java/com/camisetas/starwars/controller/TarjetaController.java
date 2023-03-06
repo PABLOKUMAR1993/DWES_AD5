@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,68 +37,51 @@ public class TarjetaController {
 
 
     /**
-     * Este método obtiene el usuario que tiene iniciada sesión, extrae de el las tarjetas que tiene y las envía
+     * Este método obtiene el usuario que tiene iniciada sesión, extrae de él las tarjetas que tiene y las envía
      * a la vista mediante el modelo.
      */
-    @GetMapping("/pago")
-    public String pago(Authentication authentication, Model model) {
+    @GetMapping("/tarjetas")
+    public String pago(Authentication aut, Model model) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
-        if (authentication != null) usuario = usuarioService.buscarPorEmail(authentication.getName());
+        if (aut != null) usuario = usuarioService.buscarPorEmail(aut.getName());
 
         // Recupero las tarjetas del usuario.
         List<Tarjeta> tarjetas = usuario.getTarjetas();
 
         // Envío las tarjetas a la vista.
         model.addAttribute("tarjetas", tarjetas);
-        return "pago";
+        return "tarjetas";
 
     }
 
 
     /**
      * Método que recibe una tarjeta a través de un formulario y la añade a la base de datos.
-     * Para ello obtiene la tarjeta por Param y seguidamente recupera el usuario mediante Authentication.
-     * Ahora se cruzan los datos, a la tarjeta se le añade el usuario a la lista de usuarios y al usuario
-     * se le añade la tarjeta a la lista de tarjetas, y se guardan los cambios en la base de datos.
      */
     @PostMapping("/anyadirTarjeta")
-    public String anyadirTarjeta(Tarjeta tarjeta, Model model, RedirectAttributes redirect,
-                                 Authentication authentication) {
+    public String anyadirTarjeta(Tarjeta tarjeta, Authentication aut, Model model, RedirectAttributes flash) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
-        if (authentication != null) usuario = usuarioService.buscarPorEmail(authentication.getName());
+        if (aut != null) usuario = usuarioService.buscarPorEmail(aut.getName());
 
-        // Añado el usuario a la lista de la tarjeta
-        List<Usuario> usuarios;
-        if (tarjeta.getUsuarios() != null) {
-            usuarios = tarjeta.getUsuarios();
+        // Añado la tarjeta al usuario.
+        usuario.addTarjeta(tarjeta);
+
+        // Actualizo el usuario en la BBDD.
+        if (usuarioService.actualizarUsuario(usuario)) {
+            // Envío un mensaje de éxito.
+            flash.addFlashAttribute("mensajeOk", "Tarjeta añadida correctamente.");
+            // Actualizo la lista de tarjetas del usuario para la vista.
+            List<Tarjeta> tarjetas = usuario.getTarjetas();
+            model.addAttribute("tarjetas", tarjetas);
+            return "redirect:/tarjetas";
         } else {
-            usuarios = new ArrayList<>();
-        }
-        usuarios.add(usuario);
-        tarjeta.setUsuarios(usuarios);
-
-        // Añado la tarjeta a la lista de tarjetas del usuario
-        List<Tarjeta> tarjetas = usuario.getTarjetas();
-        tarjetas.add(tarjeta);
-        usuario.setTarjetas(tarjetas);
-
-        // Guardo la tarjeta en la base de datos y mando mensaje de confirmación a la vista.
-        if (tarjetaService.guardarTarjeta(tarjeta)) {
-            if (usuarioService.actualizarUsuario(usuario)) {
-                redirect.addFlashAttribute("mensajeOk", "Tarjeta añadida correctamente");
-                // Actualizo el listado de tarjetas.
-                model.addAttribute("tarjetas", tarjetas);
-                return "redirect:/pago";
-            }
-            redirect.addFlashAttribute("mensajeParcial", "Tarjeta añadida correctamente, pero usuario no");
-            return "redirect:/pago";
-        } else {
-            redirect.addFlashAttribute("error", "No se ha podido añadir la tarjeta");
-            return "redirect:/pago";
+            // Envío un mensaje de error.
+            flash.addFlashAttribute("mensajeError", "Error al añadir la tarjeta.");
+            return "redirect:/tarjetas";
         }
 
     }
@@ -107,46 +89,86 @@ public class TarjetaController {
 
     /**
      * Este método recibe el id de una tarjeta y la elimina de la base de datos.
-     * Para ello, recupera el usuario mediante Authentication y la tarjeta mediante el id.
-     * Seguídamente recupera la lista de tarjetas del usuario y la borra de esa lista.
-     * Ahora recupera la lista de usuarios de la tarjeta y lo borra de la lista.
-     * Finalmente elimina la tarjeta de la bbdd y actualiza el listado de tarjetas para la vista.
      */
     @PostMapping("/eliminarTarjeta/{id}")
-    public String eliminarTarjeta(@PathVariable(name="id") int idTarjeta, Authentication authentication,
-                                  RedirectAttributes redirect, Model model) {
+    public String eliminarTarjeta(@PathVariable(name="id") int idTarjeta, Authentication aut,
+                                  Model model, RedirectAttributes flash) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
-        if (authentication != null) usuario = usuarioService.buscarPorEmail(authentication.getName());
+        if (aut != null) usuario = usuarioService.buscarPorEmail(aut.getName());
 
-        // Elimino el usuario de la lista de la tarjeta
+        // Recupero la tarjeta.
         Tarjeta tarjeta = tarjetaService.buscarTarjetaPorId(idTarjeta);
-        List<Usuario> usuarios = tarjeta.getUsuarios();
-        usuarios.remove(usuario);
-        tarjeta.setUsuarios(usuarios);
 
-        // Elimino la tarjeta de la lista de tarjetas del usuario
-        List<Tarjeta> tarjetas = usuario.getTarjetas();
-        tarjetas.remove(tarjeta);
-        usuario.setTarjetas(tarjetas);
+        // Elimino la tarjeta del usuario.
+        usuario.removeTarjeta(tarjeta);
 
-        // Guardo los cambios en la base de datos
-        if (tarjetaService.eliminarTarjeta(idTarjeta)) {
-            redirect.addFlashAttribute("mensajeOk", "Tarjeta eliminada correctamente");
-            model.addAttribute("tarjetas", tarjetas);
-            return "redirect:/pago";
+        // Actualizo el usuario en la BBDD.
+        if (usuarioService.actualizarUsuario(usuario)) {
+            // Si es ok, se habrá eliminado la relación, ahora elimino la tarjeta.
+            if(tarjetaService.eliminarTarjeta(tarjeta.getIdTarjeta())) {
+                // Envío un mensaje de éxito.
+                flash.addFlashAttribute("mensajeOk", "Tarjeta eliminada correctamente.");
+                // Actualizo la lista de tarjetas del usuario para la vista.
+                List<Tarjeta> tarjetas = usuario.getTarjetas();
+                model.addAttribute("tarjetas", tarjetas);
+                return "redirect:/tarjetas";
+            } else {
+                // Envío un mensaje de error.
+                flash.addFlashAttribute("mensajeError",
+                        "Error al eliminar la tarjeta. Se ha eliminado la relación, pero no la tarjeta.");
+                return "redirect:/tarjetas";
+            }
         } else {
-            redirect.addFlashAttribute("error", "No se ha podido eliminar la tarjeta");
-            model.addAttribute("tarjetas", tarjetas);
-            return "redirect:/pago";
+            flash.addFlashAttribute("mensajeError", "Error al eliminar la tarjeta.");
+            return "redirect:/tarjetas";
         }
 
     }
 
 
     /**
-     * Este método es para als fechas.
+     * Este método recibe el id de una tarjeta y la envía a la vista para que se pueda editar.
+     */
+    @GetMapping("/editarTarjeta/{id}")
+    public String editarDireccion(@PathVariable("id") int idTarjeta, Model model, RedirectAttributes flash) {
+
+        // Recupero la tarjeta.
+        Tarjeta tarjeta = tarjetaService.buscarTarjetaPorId(idTarjeta);
+
+        // Envío la tarjeta a la vista.
+        model.addAttribute("tarjeta", tarjeta);
+        return "editarTarjeta";
+
+    }
+
+
+    /**
+     * Este método recibe una tarjeta editada y la actualiza en la base de datos.
+     */
+    @PostMapping("/editarTarjeta/{id}")
+    public String editarDireccion(@PathVariable("id") int idTarjeta, Tarjeta tarjeta, RedirectAttributes flash) {
+
+        // Le asigno el id de la tarjeta que se va a editar.
+        tarjeta.setIdTarjeta(idTarjeta);
+
+        // Actualizo la dirección en la BBDD.
+        if (tarjetaService.actualizarTarjeta(tarjeta)) {
+            // Envío un mensaje de éxito.
+            flash.addFlashAttribute("mensajeOk", "Tarjeta editada correctamente.");
+            return "redirect:/tarjetas";
+        } else {
+            // Envío un mensaje de error.
+            flash.addFlashAttribute("mensajeError", "Error al editar la tarjeta.");
+            return "redirect:/tarjetas";
+        }
+
+    }
+
+
+    /**
+     * Este método es para las fechas.
      */
     @InitBinder
     public void initBinder(WebDataBinder webDataBinder) {

@@ -13,11 +13,11 @@ import java.util.List;
 public class HomeController {
 
 
-    // Atributos
+    //  Atributos
 
 
     @Autowired
-    private ProductoServiceInt pdao;
+    private ProductoServiceInt productoService;
 
 
     // Métodos
@@ -25,16 +25,16 @@ public class HomeController {
 
     /**
      * Método que muestra la página de inicio.
-     * Para mostrar la página de inicio se necesita un lsitado con todos los productos, pero se quiere mostrar en dos
+     * Para mostrar la página de inicio se necesita un listado con todos los productos, pero se quiere mostrar en dos
      * montones, para ello se reparan los productos en dos listas, una con los productos pares y otra con los impares.
      */
     @GetMapping("/")
-    public String index(Model model) {
+    public String index(Model model){
 
         // Recupero la lista de productos.
-        List<Producto> listado = pdao.buscarTodos();
+        List<Producto> listado = productoService.buscarTodo();
 
-        // Creo las listas de productos.
+        // Creo las listas de productos pares e impares.
         List<Producto> listadoImpares = new ArrayList<>();
         List<Producto> listadoPares = new ArrayList<>();
 
@@ -53,5 +53,23 @@ public class HomeController {
         return "index";
 
     }
+
+
+    /**
+     * Método que devuelve la vista login.jsp
+     */
+    @GetMapping("/login")
+    public String login() { return "login"; }
+
+
+    /**
+     * Método que devuelve la vista registro.jsp
+     */
+    @GetMapping("/registro")
+    public String registro() {
+        return "registro";
+    }
+
+
 
 }

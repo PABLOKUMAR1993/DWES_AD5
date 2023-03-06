@@ -1,10 +1,11 @@
-package com.camisetas.starwars.clasesPropias;
+package com.camisetas.starwars.model.dto;
 import java.util.Date;
 
 
 /**
  * Esta clase representa la información de un pedido con sus productos y cantidades.
- * Ha sido creada para poder almacenar en un sólo objeto toda la información que necesito referente a un pedido.
+ * Ha sido creada para poder almacenar en un solo objeto toda la información que necesito referente a un pedido.
+ * Para poder mostrar datos con coherencia en la vista.
  */
 public class PedidoProductoInfo {
 

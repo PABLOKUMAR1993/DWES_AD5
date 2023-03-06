@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
@@ -23,7 +22,8 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="img/portada_web.jpg" class="d-block w-100" alt="imágen de portada para la página de inicio">
+            <img src="https://rare-gallery.com/mocahbig/395347-the-bad-batch-members-star-wars-4k-pc-wallpaper.jpg"
+                 class="d-block w-100" alt="imágen de portada para la página de inicio">
             <div class="carousel-caption d-none d-md-block">
                 <h1 class="display-1">Raúl & Pavlo</h1>
                 <h1 class="display-5">Camisetas de tu saga favorita en la mejor calidad y originales.</h1>

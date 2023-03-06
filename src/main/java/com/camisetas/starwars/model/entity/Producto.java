@@ -1,7 +1,7 @@
 package com.camisetas.starwars.model.entity;
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Objects;
+import javax.persistence.*;
 
 
 @Entity
@@ -30,16 +30,11 @@ public class Producto implements Serializable {
 
 	private int stock;
 
-	//bi-directional many-to-one association to PedidosProducto
-	@OneToMany(mappedBy="producto")
-	private List<PedidosProducto> pedidosProductos;
+
+	// Constructores
 
 
-	// Atributos
-
-
-	public Producto() {
-	}
+	public Producto() {}
 
 
 	// Getters y Setters
@@ -93,30 +88,20 @@ public class Producto implements Serializable {
 		this.stock = stock;
 	}
 
-	public List<PedidosProducto> getPedidosProductos() {
-		return this.pedidosProductos;
+
+	// hashCode y equals
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Producto producto)) return false;
+		return getIdProducto() == producto.getIdProducto();
 	}
 
-	public void setPedidosProductos(List<PedidosProducto> pedidosProductos) {
-		this.pedidosProductos = pedidosProductos;
-	}
-
-
-	// Métodos
-
-
-	public PedidosProducto addPedidosProducto(PedidosProducto pedidosProducto) {
-		getPedidosProductos().add(pedidosProducto);
-		pedidosProducto.setProducto(this);
-
-		return pedidosProducto;
-	}
-
-	public PedidosProducto removePedidosProducto(PedidosProducto pedidosProducto) {
-		getPedidosProductos().remove(pedidosProducto);
-		pedidosProducto.setProducto(null);
-
-		return pedidosProducto;
+	@Override
+	public int hashCode() {
+		return Objects.hash(getIdProducto());
 	}
 
 
@@ -132,7 +117,6 @@ public class Producto implements Serializable {
 				", nombre='" + nombre + '\'' +
 				", precio=" + precio +
 				", stock=" + stock +
-				", pedidosProductos=" + pedidosProductos +
 				'}';
 	}
 

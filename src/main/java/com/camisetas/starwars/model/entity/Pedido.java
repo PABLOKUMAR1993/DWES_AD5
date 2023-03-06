@@ -1,8 +1,12 @@
 package com.camisetas.starwars.model.entity;
-import javax.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 
 @Entity
@@ -26,31 +30,31 @@ public class Pedido implements Serializable {
 	@Temporal(TemporalType.DATE)
 	private Date fecha;
 
-	//bi-directional many-to-one association to Direccione
+	//uni-directional many-to-one association to Direccion
 	@ManyToOne
 	@JoinColumn(name="id_direccion")
-	private Direccione direccione;
+	private Direccion direccion;
 
-	//bi-directional many-to-one association to Tarjeta
+	//uni-directional many-to-one association to Tarjeta
 	@ManyToOne
 	@JoinColumn(name="id_tarjeta")
 	private Tarjeta tarjeta;
 
-	//bi-directional many-to-one association to Usuario
+	//uni-directional many-to-one association to Usuario
 	@ManyToOne
 	@JoinColumn(name="id_usuario")
 	private Usuario usuario;
 
 	//bi-directional many-to-one association to PedidosProducto
-	@OneToMany(mappedBy="pedido")
+	@OneToMany(mappedBy="pedido", cascade={CascadeType.PERSIST, CascadeType.MERGE}, fetch=FetchType.LAZY)
+	@JsonIgnore
 	private List<PedidosProducto> pedidosProductos;
 
 
-	// Constructores
+	// Constructor
 
 
-	public Pedido() {
-	}
+	public Pedido() {}
 
 
 	// Getters y Setters
@@ -80,12 +84,12 @@ public class Pedido implements Serializable {
 		this.fecha = fecha;
 	}
 
-	public Direccione getDireccione() {
-		return this.direccione;
+	public Direccion getDireccion() {
+		return this.direccion;
 	}
 
-	public void setDireccione(Direccione direccione) {
-		this.direccione = direccione;
+	public void setDireccion(Direccion direccion) {
+		this.direccion = direccion;
 	}
 
 	public Tarjeta getTarjeta() {
@@ -116,18 +120,30 @@ public class Pedido implements Serializable {
 	// Métodos
 
 
-	public PedidosProducto addPedidosProducto(PedidosProducto pedidosProducto) {
-		getPedidosProductos().add(pedidosProducto);
-		pedidosProducto.setPedido(this);
-
-		return pedidosProducto;
+	public void addPedidosProducto(PedidosProducto pedidosProducto) {
+		if (pedidosProductos == null) pedidosProductos = new ArrayList<>();
+		pedidosProductos.add(pedidosProducto);
 	}
 
-	public PedidosProducto removePedidosProducto(PedidosProducto pedidosProducto) {
-		getPedidosProductos().remove(pedidosProducto);
-		pedidosProducto.setPedido(null);
+	public void removePedidosProducto(PedidosProducto pedidosProducto) {
+		if (pedidosProductos != null) pedidosProductos = new ArrayList<>();
+		pedidosProductos.remove(pedidosProducto);
+	}
 
-		return pedidosProducto;
+
+	// hashCode y equals
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Pedido pedido)) return false;
+		return getIdPedido() == pedido.getIdPedido();
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(getIdPedido());
 	}
 
 
@@ -140,7 +156,7 @@ public class Pedido implements Serializable {
 				"idPedido=" + idPedido +
 				", estado='" + estado + '\'' +
 				", fecha=" + fecha +
-				", direccione=" + direccione +
+				", direccion=" + direccion +
 				", tarjeta=" + tarjeta +
 				", usuario=" + usuario +
 				", pedidosProductos=" + pedidosProductos +

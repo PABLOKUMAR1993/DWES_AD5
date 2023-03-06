@@ -24,12 +24,12 @@ public class ProductoServiceImpl implements ProductoServiceInt {
      * Método que devuelve todos los productos de la base de datos
      */
     @Override
-    public List<Producto> buscarTodos() { return prepo.findAll(); }
+    public List<Producto> buscarTodo() { return prepo.findAll(); }
 
 
     /**
-     * Método que devuelve todos los productos de la base de datos que coincidan con alguno o todos los parametros
-     * pasados por argumentos.
+     * Método que devuelve todos los productos de la base de datos que coincidan con alguno o todos los parámetros
+     * pasados por argumentos y los ordena según los parámetros.
      */
     @Override
     public List<Producto> filtroParaCatalogo(String alfabetico, String precio, String busqueda) {

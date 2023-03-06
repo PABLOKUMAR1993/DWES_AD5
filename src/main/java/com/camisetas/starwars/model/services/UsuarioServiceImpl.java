@@ -17,7 +17,7 @@ public class UsuarioServiceImpl implements UsuarioServiceInt {
     private UsuarioRepository usuarioRepository;
 
     @Autowired
-    private RoleServiceInt roleService;
+    private RolServiceInt roleService;
 
 
     // Métodos Implementados

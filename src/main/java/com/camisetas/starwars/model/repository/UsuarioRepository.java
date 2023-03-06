@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 public interface UsuarioRepository extends JpaRepository<Usuario, Integer>{
 
     /**
-     * Método que busca um usuário por su email
+     * Método que busca um usuario por su email
      */
     @Query("select u from Usuario u where u.email = ?1")
     Usuario buscarPorEmail(String email);

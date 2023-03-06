@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!doctype html>
 <html lang="es" data-bs-theme="dark">
 <head>
@@ -42,17 +41,10 @@
 
 
 <!-- Alertas -->
-<c:if test="${ errorParcial != null }">
+<c:if test="${ mensajeError != null }">
     <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
         <div class="alert alert-danger" role="alert">
-                ${ errorParcial }
-        </div>
-    </div>
-</c:if>
-<c:if test="${ error != null }">
-    <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
-        <div class="alert alert-danger" role="alert">
-                ${ error }
+                ${ mensajeError }
         </div>
     </div>
 </c:if>
@@ -119,6 +111,10 @@
                                                             style="margin: 10px 10px 10px 0;">
                                                         Eliminar Tarjeta
                                                     </button>
+                                                    <a href="/editarTarjeta/${tarjeta.idTarjeta}"
+                                                       class="btn btn-warning">
+                                                        Editar Tarjeta
+                                                    </a>
                                                 </form>
                                             </div>
                                         </div>
@@ -150,7 +146,6 @@
             </div>
             <form method="post" action="/anyadirTarjeta">
                 <div class="modal-body">
-
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Titular</label>
                         <input type="text" class="form-control" id="nombre" name="nombre"

@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <!doctype html>
 <html lang="es">
 <head>
@@ -50,7 +49,7 @@
                             Mi Cuenta
                         </a>
                         <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/pago">Métodos de Pago</a></li>
+                            <li><a class="dropdown-item" href="/tarjetas">Métodos de Pago</a></li>
                             <li>
                                 <hr class="dropdown-divider">
                             </li>

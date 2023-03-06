@@ -1,13 +1,13 @@
 package com.camisetas.starwars.model.entity;
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Objects;
+import javax.persistence.*;
 
 
 @Entity
 @Table(name="direcciones")
-@NamedQuery(name="Direccione.findAll", query="SELECT d FROM Direccione d")
-public class Direccione implements Serializable {
+@NamedQuery(name="Direccion.findAll", query="SELECT d FROM Direccion d")
+public class Direccion implements Serializable {
 
 
 	// Atributos
@@ -33,21 +33,27 @@ public class Direccione implements Serializable {
 
 	private int piso;
 
-	//bi-directional many-to-one association to Pedido
-	@OneToMany(mappedBy="direccione")
-	private List<Pedido> pedidos;
 
-	//bi-directional many-to-many association to Usuario
-	@ManyToMany(mappedBy="direcciones")
-	private List<Usuario> usuarios;
+	// Constructor
 
 
-	// Constructores
+	public Direccion() {}
 
-
-	public Direccione() {
+	public Direccion(String calle, String codigoPostal, String localidad, int numero) {
+		this.calle = calle;
+		this.codigoPostal = codigoPostal;
+		this.localidad = localidad;
+		this.numero = numero;
 	}
 
+	public Direccion(String calle, String codigoPostal, String letra, String localidad, int numero, int piso) {
+		this.calle = calle;
+		this.codigoPostal = codigoPostal;
+		this.letra = letra;
+		this.localidad = localidad;
+		this.numero = numero;
+		this.piso = piso;
+	}
 
 	// Getters y Setters
 
@@ -108,38 +114,20 @@ public class Direccione implements Serializable {
 		this.piso = piso;
 	}
 
-	public List<Pedido> getPedidos() {
-		return this.pedidos;
+
+	// hashCode y equals
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Direccion direccion)) return false;
+		return getIdDireccion() == direccion.getIdDireccion();
 	}
 
-	public void setPedidos(List<Pedido> pedidos) {
-		this.pedidos = pedidos;
-	}
-
-	public List<Usuario> getUsuarios() {
-		return this.usuarios;
-	}
-
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
-	}
-
-
-	// Métodos
-
-
-	public Pedido addPedido(Pedido pedido) {
-		getPedidos().add(pedido);
-		pedido.setDireccione(this);
-
-		return pedido;
-	}
-
-	public Pedido removePedido(Pedido pedido) {
-		getPedidos().remove(pedido);
-		pedido.setDireccione(null);
-
-		return pedido;
+	@Override
+	public int hashCode() {
+		return Objects.hash(getIdDireccion());
 	}
 
 
@@ -148,7 +136,7 @@ public class Direccione implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Direccione{" +
+		return "Direccion{" +
 				"idDireccion=" + idDireccion +
 				", calle='" + calle + '\'' +
 				", codigoPostal='" + codigoPostal + '\'' +
@@ -156,8 +144,6 @@ public class Direccione implements Serializable {
 				", localidad='" + localidad + '\'' +
 				", numero=" + numero +
 				", piso=" + piso +
-				", pedidos=" + pedidos +
-				", usuarios=" + usuarios +
 				'}';
 	}
 

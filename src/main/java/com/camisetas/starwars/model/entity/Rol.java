@@ -1,13 +1,13 @@
 package com.camisetas.starwars.model.entity;
-import javax.persistence.*;
 import java.io.Serializable;
-import java.util.List;
+import java.util.Objects;
+import javax.persistence.*;
 
 
 @Entity
 @Table(name="roles")
-@NamedQuery(name="Role.findAll", query="SELECT r FROM Role r")
-public class Role implements Serializable {
+@NamedQuery(name="Rol.findAll", query="SELECT r FROM Rol r")
+public class Rol implements Serializable {
 
 
 	// Atributos
@@ -22,16 +22,11 @@ public class Role implements Serializable {
 
 	private String nombre;
 
-	//bi-directional many-to-many association to Usuario
-	@ManyToMany(mappedBy="roles")
-	private List<Usuario> usuarios;
+
+	// Constructor
 
 
-	// Constructores
-
-
-	public Role() {
-	}
+	public Rol() {}
 
 
 	// Getters y Setters
@@ -53,12 +48,20 @@ public class Role implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public List<Usuario> getUsuarios() {
-		return this.usuarios;
+
+	// hashCode y equals
+
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof Rol rol)) return false;
+		return getIdRol() == rol.getIdRol();
 	}
 
-	public void setUsuarios(List<Usuario> usuarios) {
-		this.usuarios = usuarios;
+	@Override
+	public int hashCode() {
+		return Objects.hash(getIdRol());
 	}
 
 
@@ -67,10 +70,9 @@ public class Role implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Role{" +
+		return "Rol{" +
 				"idRol=" + idRol +
 				", nombre='" + nombre + '\'' +
-				", usuarios=" + usuarios +
 				'}';
 	}
 

@@ -28,6 +28,7 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
             "  CASE WHEN :precio = 'desc' THEN p.precio END DESC\n ")
     List<Producto> filtroParaCatalogo(String alfabetico, String precio, String busqueda);
 
+
     /**
      * Esta consulta devuelve una lista de productos a partir de una lista de IDs.
      */
