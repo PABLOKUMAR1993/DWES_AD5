@@ -1,11 +1,14 @@
 package com.camisetas.starwars.configuration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import javax.sql.DataSource;
 
 
@@ -48,17 +51,25 @@ public class DataUserConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
+
+            // Desactivar la protección CSRF.
             .csrf().disable()
             .authorizeRequests()
+
+            // Las vistas públicas no requieren autenticación.
+            .antMatchers("/", "/login", "/logout", "/registro",
+                    "/crearCliente", "/catalogo/**", "/carrito").permitAll()
+
+            // Autorizaciones por Roles.
+            // Autorizo a todos, porque no hay implemetanción del rol ADMIN.
+            .antMatchers("/**").hasAnyAuthority("ROLE_CLIENTE", "ROLE_ADMIN")
+
+            // Todas las demás rutas requieren autenticación.
             .anyRequest().authenticated()
-            .and()
-            .formLogin()
-            .loginPage("/login")
-            .permitAll()
-            .and()
-            .logout()
-            .logoutSuccessUrl("/login?logout")
-            .permitAll();
+
+            // El formulario de login no requiere autenticación y le doy una nueva vista
+            .and().formLogin().loginPage("/login").permitAll();
+
     }
 
 
@@ -70,6 +81,15 @@ public class DataUserConfiguration extends WebSecurityConfigurerAdapter {
         web
             .ignoring()
             .antMatchers("/resources/**");
+    }
+
+
+    /**
+     * Método para encriptar las contraseñas.
+     */
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 
 

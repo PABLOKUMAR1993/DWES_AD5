@@ -43,6 +43,7 @@
                     <li class="nav-item">
                         <a class="nav-link " aria-current="page" href="#">Carrito</a>
                     </li>
+                    <sec:authorize access="isAuthenticated()">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
                            aria-expanded="false">
@@ -60,12 +61,27 @@
                             <li><a class="dropdown-item" href="/pedidos">Pedidos Completados</a></li>
                         </ul>
                     </li>
+                    </sec:authorize>
+                    <sec:authorize access="!isAuthenticated()">
                     <li>
+                        <a class="nav-link disabled">Mi Cuenta</a>
+                    </li>
+                    </sec:authorize>
+                    <sec:authorize access="!isAuthenticated()">
+                    <li style="margin-top: 25px;">
                         <a class="btn btn-primary" href="/login" role="button">Iniciar Sesión</a>
                     </li>
-                    <li>
+                    </sec:authorize>
+                    <sec:authorize access="isAuthenticated()">
+                        <li style="margin-top: 25px;">
+                            <a class="btn btn-primary" href="/registro" role="button">Crear Otra Cuenta</a>
+                        </li>
+                    </sec:authorize>
+                    <sec:authorize access="isAuthenticated()">
+                    <li style="margin-top: 25px;">
                         <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
                     </li>
+                    </sec:authorize>
                 </ul>
             </div>
         </div>
