@@ -117,6 +117,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">${direccion.localidad}.</h5>
                                             <p class="card-title">Localidad: ${direccion.localidad}.</p>
+                                            <p class="card-title">Provincia: ${direccion.provincia}.</p>
                                             <p class="card-title">Calle: ${direccion.calle}, ${direccion.numero}.</p>
                                             <c:if test="${direccion.piso != ''}">
                                                 <p class="card-title">
@@ -176,6 +177,14 @@
                                aria-describedby="emailHelp" required>
                         <div id="localidadAyuda" class="form-text">
                             Ciudad en la que se entregará el pedido.
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="provincia" class="form-label">Provincia</label>
+                        <input type="text" class="form-control" id="provincia" name="provincia"
+                               aria-describedby="emailHelp" required>
+                        <div id="provinciaAyuda" class="form-text">
+                            Provincia a la cual pertenece la localidad.
                         </div>
                     </div>
                     <div class="mb-3">

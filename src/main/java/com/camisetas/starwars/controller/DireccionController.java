@@ -59,6 +59,7 @@ public class DireccionController {
     @PostMapping("/anyadirDireccion/{origen}")
     public String anyadirDireccion(@RequestParam("localidad") String localidad, @RequestParam("calle") String calle,
                                    @RequestParam("numero") int numero, @RequestParam("codigoPostal") String codigoPostal,
+                                   @RequestParam("provincia") String provincia,
                                    @RequestParam(name = "piso", required = false) Integer piso,
                                    @RequestParam(name = "letra", required = false) String letra,
                                    @PathVariable("origen") String origen,
@@ -71,9 +72,9 @@ public class DireccionController {
         // Creo la dirección usando el constructor que corresponda según si ha rellenado los datos opcionales o no.
         Direccion direccion;
         if (piso == null) {
-            direccion = new Direccion(calle, codigoPostal, localidad, numero, "albacete");
+            direccion = new Direccion(calle, codigoPostal, localidad, numero, provincia);
         } else {
-            direccion = new Direccion(calle, codigoPostal, letra, localidad, "albacete", numero, piso);
+            direccion = new Direccion(calle, codigoPostal, letra, localidad, provincia, numero, piso);
         }
 
         // Añado la dirección al usuario.
