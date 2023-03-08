@@ -57,6 +57,20 @@
 </c:if>
 
 
+<!-- Breadcrumbs -->
+<div class="d-flex justify-content-center" style="margin-top: 50px;">
+    <div class="container" style="margin: 50px 0 50px 0;">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="/verCarrito">Carrito</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Direcciones</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+
+
 <!-- Si no tienes direccions ves esto -->
 <c:if test="${direcciones == '[]'}">
     <div class="d-flex justify-content-center" style="margin: 50px 0 50px 0;">
@@ -72,6 +86,9 @@
                     </p>
                 </div>
                 <div class="card-footer text-muted">
+                    <a class="btn btn-warning" href="/verCarrito" style="margin: 10px 5px 10px 0;">
+                        Volver al Carrito
+                    </a>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#anyadirDireccion" style="margin: 10px 0 10px 0;">
                         Añadir Dirección
@@ -109,18 +126,18 @@
                                             <p class="card-title">Código Postal: ${direccion.codigoPostal}.</p>
                                         </div>
                                         <div class="card-footer bg-transparent d-flex justify-content-center">
-                                            <form action="/eliminarDireccion/${direccion.idDireccion}/direccion"
+                                            <form action="/eliminarDireccion/${direccion.idDireccion}/pedido"
                                                   method="post">
-                                                <button type="submit" class="btn btn-danger"
-                                                        style="margin: 10px 10px 10px 0;">
+                                                <button type="submit" class="btn btn-danger" style="margin: 10px 10px 10px 0;">
                                                     Eliminar Dirección
                                                 </button>
-                                                <a href="/editarDireccion/${direccion.idDireccion}"
-                                                   class="btn btn-warning">
-                                                    Editar Dirección
-                                                </a>
                                             </form>
-                                            </button>
+                                            <form action="/direccionEnvioPedido/${direccion.idDireccion}"
+                                                  method="post">
+                                                <button type="submit" class="btn btn-success" style="margin: 10px 10px 10px 0;">
+                                                    Elegir Dirección
+                                                </button>
+                                            </form>
                                         </div>
                                     </div>
                                 </c:forEach>
@@ -129,6 +146,9 @@
                     </div>
                 </div>
                 <div class="card-footer text-muted">
+                    <a class="btn btn-warning" href="/verCarrito" style="margin: 10px 5px 10px 0;">
+                        Volver al Carrito
+                    </a>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#anyadirDireccion" style="margin: 10px 0 10px 0;">
                         Añadir Dirección Nueva
@@ -148,7 +168,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Añadir Dirección</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/anyadirDireccion/direccion">
+            <form method="post" action="/anyadirDireccion/pedido">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="localidad" class="form-label">Localidad</label>

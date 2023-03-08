@@ -56,9 +56,12 @@ public class DataUserConfiguration extends WebSecurityConfigurerAdapter {
             .csrf().disable()
             .authorizeRequests()
 
+            // Los directorios estáticos no requieren autenticación.
+            .antMatchers("/img/**", "/css/**", "js/**", "/resources/**").permitAll()
+
             // Las vistas públicas no requieren autenticación.
-            .antMatchers("/", "/login", "/logout", "/registro",
-                    "/crearCliente", "/catalogo/**", "/carrito").permitAll()
+            .antMatchers("/", "/login", "/logout", "/registro", "/api/**",
+                    "/crearCliente", "/catalogo/**", "/anyadirCarrito/**").permitAll()
 
             // Autorizaciones por Roles.
             // Autorizo a todos, porque no hay implemetanción del rol ADMIN.

@@ -14,7 +14,7 @@ public class ProductoServiceImpl implements ProductoServiceInt {
 
 
     @Autowired
-    ProductoRepository prepo;
+    ProductoRepository productoRepository;
 
 
     // Métodos Implementados
@@ -24,7 +24,7 @@ public class ProductoServiceImpl implements ProductoServiceInt {
      * Método que devuelve todos los productos de la base de datos
      */
     @Override
-    public List<Producto> buscarTodo() { return prepo.findAll(); }
+    public List<Producto> buscarTodo() { return productoRepository.findAll(); }
 
 
     /**
@@ -34,7 +34,7 @@ public class ProductoServiceImpl implements ProductoServiceInt {
     @Override
     public List<Producto> filtroParaCatalogo(String alfabetico, String precio, String busqueda) {
         try {
-            return this.prepo.filtroParaCatalogo(alfabetico, precio, busqueda);
+            return this.productoRepository.filtroParaCatalogo(alfabetico, precio, busqueda);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -46,7 +46,7 @@ public class ProductoServiceImpl implements ProductoServiceInt {
      * Método que devuelve un producto de la base de datos que coincida con el id pasado por argumento.
      */
     @Override
-    public Producto buscarPorId(int id) { return prepo.findById(id).orElse(null); }
+    public Producto buscarPorId(int id) { return productoRepository.findById(id).orElse(null); }
 
 
     /**
@@ -56,11 +56,27 @@ public class ProductoServiceImpl implements ProductoServiceInt {
     @Override
     public List<Producto> buscarProductosPorIds(List<Integer> ids) {
         try {
-            return this.prepo.buscarProductosPorIds(ids);
+            return this.productoRepository.buscarProductosPorIds(ids);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
+    }
+
+
+    /**
+     * Método que devuelve un producto de la base de datos que coincida con el id pasado por argumento.
+     */
+    @Override
+    public Producto buscarProductoPorId(int idProducto) {
+
+        try {
+            return this.productoRepository.findById(idProducto).orElse(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
     }
 
 

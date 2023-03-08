@@ -30,6 +30,11 @@ public class Producto implements Serializable {
 
 	private int stock;
 
+	//uni-directional many-to-one association to Familia
+	@ManyToOne
+	@JoinColumn(name="id_familia")
+	private Familia familia;
+
 
 	// Constructores
 
@@ -88,6 +93,14 @@ public class Producto implements Serializable {
 		this.stock = stock;
 	}
 
+	public Familia getFamilia() {
+		return familia;
+	}
+
+	public void setFamilia(Familia familia) {
+		this.familia = familia;
+	}
+
 
 	// hashCode y equals
 
@@ -117,6 +130,7 @@ public class Producto implements Serializable {
 				", nombre='" + nombre + '\'' +
 				", precio=" + precio +
 				", stock=" + stock +
+				", familia=" + familia +
 				'}';
 	}
 

@@ -40,36 +40,47 @@
                     <li class="nav-item">
                         <a class="nav-link " aria-current="page" href="/catalogo">Catálogo</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link " aria-current="page" href="#">Carrito</a>
-                    </li>
                     <sec:authorize access="isAuthenticated()">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                           aria-expanded="false">
-                            Mi Cuenta
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                Mi Cuenta
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-dark">
+                                <li><a class="dropdown-item" href="/tarjetas">Métodos de Pago</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/direcciones">Direcciones de Envío</a></li>
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" href="/pedidos">Pedidos Completados</a></li>
+                            </ul>
+                        </li>
+                    </sec:authorize>
+                    <sec:authorize access="!isAuthenticated()">
+                        <li>
+                            <a class="nav-link disabled">Mi Cuenta</a>
+                        </li>
+                    </sec:authorize>
+                    <sec:authorize access="!isAuthenticated()">
+                        <li style="margin-top: 25px;">
+                            <a class="btn btn-primary" href="/login" role="button">Iniciar Sesión</a>
+                        </li>
+                    </sec:authorize>
+                    <sec:authorize access="isAuthenticated()">
+                    <li class="nav-item" style="margin-top: 25px;">
+                        <a class="btn btn-success position-relative" href="/verCarrito">
+                            Carrito
+                            <c:if test="${cantidadProductos != null}">
+                                <span class="position-absolute top-0 start-100 translate-middle
+                                            badge rounded-pill bg-danger">
+                                    ${cantidadProductos}
+                                    <span class="visually-hidden">Productos en la Cesta.</span>
+                                </span>
+                            </c:if>
                         </a>
-                        <ul class="dropdown-menu dropdown-menu-dark">
-                            <li><a class="dropdown-item" href="/tarjetas">Métodos de Pago</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="/direcciones">Direcciones de Envío</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="/pedidos">Pedidos Completados</a></li>
-                        </ul>
-                    </li>
-                    </sec:authorize>
-                    <sec:authorize access="!isAuthenticated()">
-                    <li>
-                        <a class="nav-link disabled">Mi Cuenta</a>
-                    </li>
-                    </sec:authorize>
-                    <sec:authorize access="!isAuthenticated()">
-                    <li style="margin-top: 25px;">
-                        <a class="btn btn-primary" href="/login" role="button">Iniciar Sesión</a>
                     </li>
                     </sec:authorize>
                     <sec:authorize access="isAuthenticated()">
@@ -78,9 +89,9 @@
                         </li>
                     </sec:authorize>
                     <sec:authorize access="isAuthenticated()">
-                    <li style="margin-top: 25px;">
-                        <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
-                    </li>
+                        <li style="margin-top: 25px;">
+                            <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+                        </li>
                     </sec:authorize>
                 </ul>
             </div>

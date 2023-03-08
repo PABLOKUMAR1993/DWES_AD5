@@ -56,11 +56,12 @@ public class DireccionController {
      * esto es así porque dentro de la dirección hay datos que son opcionales y me veo en la obligación de
      * hacerlo de este modo para comprobar que datos llegan antes de construir el objeto direccion.
      */
-    @PostMapping("/anyadirDireccion")
+    @PostMapping("/anyadirDireccion/{origen}")
     public String anyadirDireccion(@RequestParam("localidad") String localidad, @RequestParam("calle") String calle,
                                    @RequestParam("numero") int numero, @RequestParam("codigoPostal") String codigoPostal,
                                    @RequestParam(name = "piso", required = false) Integer piso,
                                    @RequestParam(name = "letra", required = false) String letra,
+                                   @PathVariable("origen") String origen,
                                    Authentication aut, Model model, RedirectAttributes flash) {
 
         // Recupero el usuario.
@@ -70,9 +71,9 @@ public class DireccionController {
         // Creo la dirección usando el constructor que corresponda según si ha rellenado los datos opcionales o no.
         Direccion direccion;
         if (piso == null) {
-            direccion = new Direccion(calle, codigoPostal, localidad, numero);
+            direccion = new Direccion(calle, codigoPostal, localidad, numero, "albacete");
         } else {
-            direccion = new Direccion(calle, codigoPostal, letra, localidad, numero, piso);
+            direccion = new Direccion(calle, codigoPostal, letra, localidad, "albacete", numero, piso);
         }
 
         // Añado la dirección al usuario.
@@ -85,11 +86,25 @@ public class DireccionController {
             // Actualizo la lista de direcciones del usuario.
             List<Direccion> direcciones = usuario.getDirecciones();
             model.addAttribute("direcciones", direcciones);
-            return "redirect:/direcciones";
+            switch (origen) {
+                case "pedido":
+                    return "redirect:/direccionEnvioPedido";
+                case "direccion":
+                    return "redirect:/direcciones";
+                default:
+                    return "redirect:/direcciones";
+            }
         } else {
             // Envío un mensaje de error.
             flash.addFlashAttribute("mensajeError", "Error al añadir la dirección.");
-            return "redirect:/direcciones";
+            switch (origen) {
+                case "pedido":
+                    return "redirect:/direccionEnvioPedido";
+                case "direccion":
+                    return "redirect:/direcciones";
+                default:
+                    return "redirect:/direcciones";
+            }
         }
 
     }
@@ -98,9 +113,9 @@ public class DireccionController {
     /**
      * Este método recibe el id de una dirección y la elimina del usuario que tiene iniciada sesión.
      */
-    @PostMapping("/eliminarDireccion/{id}")
-    public String anyadirDireccion(@PathVariable(name="id") int idDireccion, Authentication aut, Model model,
-                                   RedirectAttributes flash) {
+    @PostMapping("/eliminarDireccion/{id}/{origen}")
+    public String anyadirDireccion(@PathVariable(name="id") int idDireccion, @PathVariable("origen") String origen,
+                                   Authentication aut, Model model, RedirectAttributes flash) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
@@ -121,17 +136,41 @@ public class DireccionController {
                 // Actualizo la lista de direcciones del usuario para la vista.
                 List<Direccion> direcciones = usuario.getDirecciones();
                 model.addAttribute("direcciones", direcciones);
-                return "redirect:/direcciones";
+                // Devuelvo a la vista desde la que hizó la orden.
+                switch (origen) {
+                    case "pedido":
+                        return "redirect:/direccionEnvioPedido";
+                    case "direccion":
+                        return "redirect:/direcciones";
+                    default:
+                        return "redirect:/direcciones";
+                }
             } else {
                 // Envío un mensaje de error.
                 flash.addFlashAttribute("mensajeError",
                         "Error al eliminar la dirección. Se ha eliminado la relación, pero no la dirección.");
-                return "redirect:/direcciones";
+                // Devuelvo a la vista desde la que hizó la orden.
+                switch (origen) {
+                    case "pedido":
+                        return "redirect:/direccionEnvioPedido";
+                    case "direccion":
+                        return "redirect:/direcciones";
+                    default:
+                        return "redirect:/direcciones";
+                }
             }
         } else {
             // Envío un mensaje de error.
             flash.addFlashAttribute("mensajeError", "Error al eliminar la dirección.");
-            return "redirect:/direcciones";
+            // Devuelvo a la vista desde la que hizó la orden.
+            switch (origen) {
+                case "pedido":
+                    return "redirect:/direccionEnvioPedido";
+                case "direccion":
+                    return "redirect:/direcciones";
+                default:
+                    return "redirect:/direcciones";
+            }
         }
 
     }

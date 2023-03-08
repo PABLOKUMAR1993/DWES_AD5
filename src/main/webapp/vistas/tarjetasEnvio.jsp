@@ -55,11 +55,33 @@
         </div>
     </div>
 </c:if>
+<c:if test="${ mensajeDireccionOk != null }">
+    <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
+        <div class="alert alert-success" role="alert">
+                ${ mensajeDireccionOk }
+        </div>
+    </div>
+</c:if>
+
+
+<!-- Breadcrumbs -->
+<div class="d-flex justify-content-center" style="margin-top: 50px;">
+    <div class="container" style="margin: 50px 0 50px 0;">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="/verCarrito">Carrito</a></li>
+                <li class="breadcrumb-item"><a href="/direccionEnvioPedido">Direcciones</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Tarjetas</li>
+            </ol>
+        </nav>
+    </div>
+</div>
 
 
 <!-- Si no tienes tarjetas -->
 <c:if test="${tarjetas == '[]'}">
-    <div class="d-flex justify-content-center" style="margin: 50px 0 50px 0;">
+    <div class="d-flex justify-content-center" style="margin-bottom: 50px;">
         <div class="container">
             <div class="card text-center">
                 <div class="card-header">
@@ -70,6 +92,9 @@
                     <p class="card-text">Para poder hacer compras es necesario tener una tarjeta.</p>
                 </div>
                 <div class="card-footer text-muted">
+                    <a class="btn btn-warning" href="/direccionEnvioPedido" style="margin: 10px 5px 10px 0;">
+                        Volver a Direcciones
+                    </a>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                             data-bs-target="#anyadirTarjeta" style="margin: 10px 0 10px 0;">
                         Añadir Tarjeta
@@ -83,7 +108,7 @@
 
 <!-- Si tienes tarjetas -->
 <c:if test="${tarjetas != '[]'}">
-    <div class="d-flex justify-content-center" style="margin: 100px 0 100px 0;">
+    <div class="d-flex justify-content-center" style="margin-bottom: 50px;">
         <div class="container">
             <div class="card text-center">
                 <div class="card-header">
@@ -102,19 +127,20 @@
                                                 <p class="card-title">Número: ${tarjeta.numero}</p>
                                                 <p class="card-text"><small
                                                         class="text-muted">Caduca: ${tarjeta.fechaCaducidad}</small></p>
-                                                <p class="card-text"><small class="text-muted">CVC: ${tarjeta.cvv}</small>
+                                                <p class="card-text"><small
+                                                        class="text-muted">CVC: ${tarjeta.cvv}</small>
                                                 </p>
                                             </div>
                                             <div class="card-footer bg-transparent d-flex justify-content-center">
-                                                <form action="/eliminarTarjeta/${tarjeta.idTarjeta}/tarjeta"
+                                                <form action="/eliminarTarjeta/${tarjeta.idTarjeta}/pedido"
                                                       method="post">
                                                     <button type="submit" class="btn btn-danger"
                                                             style="margin: 10px 10px 10px 0;">
                                                         Eliminar Tarjeta
                                                     </button>
-                                                    <a href="/editarTarjeta/${tarjeta.idTarjeta}"
-                                                       class="btn btn-warning">
-                                                        Editar Tarjeta
+                                                    <a href="/pedidoCompletado"
+                                                       class="btn btn-success">
+                                                        Elegir Tarjeta
                                                     </a>
                                                 </form>
                                             </div>
@@ -126,8 +152,11 @@
                     </c:if>
                 </div>
                 <div class="card-footer text-muted">
+                    <a class="btn btn-warning" href="/direccionEnvioPedido" style="margin: 10px 5px 10px 0;">
+                        Volver a Direcciones
+                    </a>
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#anyadirTarjeta" style="margin: 10px 0 10px 0;">
+                            data-bs-target="#anyadirTarjeta" style="margin: 10px 0 10px 5px;">
                         Añadir Tarjeta Nueva
                     </button>
                 </div>
@@ -145,7 +174,7 @@
                 <h1 class="modal-title fs-5" id="exampleModalLabel">Añadir Tarjeta</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <form method="post" action="/anyadirTarjeta/tarjeta">
+            <form method="post" action="/anyadirTarjeta/pedido">
                 <div class="modal-body">
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Titular</label>

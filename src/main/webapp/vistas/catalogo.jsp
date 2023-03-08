@@ -39,6 +39,23 @@
 </figure>
 
 
+<!-- Alertas -->
+<c:if test="${ mensajeCarritoError != null }">
+    <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
+        <div class="alert alert-danger" role="alert">
+                ${ mensajeCarritoError }
+        </div>
+    </div>
+</c:if>
+<c:if test="${ mensajeCarritoOk != null }">
+    <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
+        <div class="alert alert-success" role="alert">
+                ${ mensajeCarritoOk }
+        </div>
+    </div>
+</c:if>
+
+
 <!-- Filtros & Buscador -->
 <div class="container text-center" style="margin-bottom: 50px;">
     <div class="row">
@@ -108,9 +125,14 @@
                         <p class="card-title">${producto.nombre}</p>
                         <p class="card-text"><small class="text-muted">${producto.descripcion}</small></p>
                     </div>
-                    <div class="card-footer bg-transparent">
-                        <a href="/catalogo/producto/${producto.idProducto}" class="btn btn-info">Ver Más</a>
-                        <a href="#" class="btn btn-primary">Comprar</a>
+                    <div class="card-footer bg-transparent d-flex justify-content-center">
+                        <a href="/catalogo/producto/${producto.idProducto}"
+                           class="btn btn-info" style="margin-right: 5px;">Ver Más</a>
+                        <form method="get" action="/anyadirCarrito/${producto.idProducto}/catalogo">
+                            <button type="submit" class="btn btn-primary" style="margin-left: 5px;">
+                                Añadir al Carrito
+                            </button>
+                        </form>
                     </div>
                 </div>
             </c:forEach>

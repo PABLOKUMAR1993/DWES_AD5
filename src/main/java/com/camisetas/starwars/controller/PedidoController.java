@@ -6,7 +6,6 @@ import com.camisetas.starwars.model.entity.PedidosProducto;
 import com.camisetas.starwars.model.entity.Producto;
 import com.camisetas.starwars.model.entity.Usuario;
 import com.camisetas.starwars.model.services.PedidoServiceInt;
-import com.camisetas.starwars.model.services.PedidosProductoInt;
 import com.camisetas.starwars.model.services.UsuarioServiceInt;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -18,7 +17,7 @@ import java.util.List;
 
 
 @Controller
-public class PedidosController {
+public class PedidoController {
 
 
     // Atributos

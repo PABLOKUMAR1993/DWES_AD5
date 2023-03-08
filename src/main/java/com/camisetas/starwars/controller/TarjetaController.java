@@ -1,4 +1,5 @@
 package com.camisetas.starwars.controller;
+
 import com.camisetas.starwars.model.entity.Tarjeta;
 import com.camisetas.starwars.model.entity.Usuario;
 import com.camisetas.starwars.model.services.TarjetaServiceInt;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -60,8 +62,9 @@ public class TarjetaController {
     /**
      * Método que recibe una tarjeta a través de un formulario y la añade a la base de datos.
      */
-    @PostMapping("/anyadirTarjeta")
-    public String anyadirTarjeta(Tarjeta tarjeta, Authentication aut, Model model, RedirectAttributes flash) {
+    @PostMapping("/anyadirTarjeta/{origen}")
+    public String anyadirTarjeta(Tarjeta tarjeta, @PathVariable("origen") String origen, Authentication aut,
+                                 Model model, RedirectAttributes flash) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
@@ -77,11 +80,25 @@ public class TarjetaController {
             // Actualizo la lista de tarjetas del usuario para la vista.
             List<Tarjeta> tarjetas = usuario.getTarjetas();
             model.addAttribute("tarjetas", tarjetas);
-            return "redirect:/tarjetas";
+            switch (origen) {
+                case "pedido":
+                    return "redirect:/tarjetaEnvioPedido";
+                case "tarjeta":
+                    return "redirect:/tarjetas";
+                default:
+                    return "redirect:/tarjetas";
+            }
         } else {
             // Envío un mensaje de error.
             flash.addFlashAttribute("mensajeError", "Error al añadir la tarjeta.");
-            return "redirect:/tarjetas";
+            switch (origen) {
+                case "pedido":
+                    return "redirect:/tarjetaEnvioPedido";
+                case "tarjeta":
+                    return "redirect:/tarjetas";
+                default:
+                    return "redirect:/tarjetas";
+            }
         }
 
     }
@@ -90,9 +107,9 @@ public class TarjetaController {
     /**
      * Este método recibe el id de una tarjeta y la elimina de la base de datos.
      */
-    @PostMapping("/eliminarTarjeta/{id}")
-    public String eliminarTarjeta(@PathVariable(name="id") int idTarjeta, Authentication aut,
-                                  Model model, RedirectAttributes flash) {
+    @PostMapping("/eliminarTarjeta/{id}/{origen}")
+    public String eliminarTarjeta(@PathVariable(name = "id") int idTarjeta, @PathVariable("origen") String origen,
+                                  Authentication aut, Model model, RedirectAttributes flash) {
 
         // Recupero el usuario.
         Usuario usuario = new Usuario();
@@ -107,22 +124,43 @@ public class TarjetaController {
         // Actualizo el usuario en la BBDD.
         if (usuarioService.actualizarUsuario(usuario)) {
             // Si es ok, se habrá eliminado la relación, ahora elimino la tarjeta.
-            if(tarjetaService.eliminarTarjeta(tarjeta.getIdTarjeta())) {
+            if (tarjetaService.eliminarTarjeta(tarjeta.getIdTarjeta())) {
                 // Envío un mensaje de éxito.
                 flash.addFlashAttribute("mensajeOk", "Tarjeta eliminada correctamente.");
                 // Actualizo la lista de tarjetas del usuario para la vista.
                 List<Tarjeta> tarjetas = usuario.getTarjetas();
                 model.addAttribute("tarjetas", tarjetas);
-                return "redirect:/tarjetas";
+                switch (origen) {
+                    case "pedido":
+                        return "redirect:/tarjetaEnvioPedido";
+                    case "tarjeta":
+                        return "redirect:/tarjetas";
+                    default:
+                        return "redirect:/tarjetas";
+                }
             } else {
                 // Envío un mensaje de error.
                 flash.addFlashAttribute("mensajeError",
                         "Error al eliminar la tarjeta. Se ha eliminado la relación, pero no la tarjeta.");
-                return "redirect:/tarjetas";
+                switch (origen) {
+                    case "pedido":
+                        return "redirect:/tarjetaEnvioPedido";
+                    case "tarjeta":
+                        return "redirect:/tarjetas";
+                    default:
+                        return "redirect:/tarjetas";
+                }
             }
         } else {
             flash.addFlashAttribute("mensajeError", "Error al eliminar la tarjeta.");
-            return "redirect:/tarjetas";
+            switch (origen) {
+                case "pedido":
+                    return "redirect:/tarjetaEnvioPedido";
+                case "tarjeta":
+                    return "redirect:/tarjetas";
+                default:
+                    return "redirect:/tarjetas";
+            }
         }
 
     }

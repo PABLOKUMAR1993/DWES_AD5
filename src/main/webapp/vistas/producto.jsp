@@ -45,10 +45,28 @@
 </div>
 
 
+<!-- Alertas -->
+<c:if test="${ mensajeCarritoError != null }">
+    <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
+        <div class="alert alert-danger" role="alert">
+                ${ mensajeCarritoError }
+        </div>
+    </div>
+</c:if>
+<c:if test="${ mensajeCarritoOk != null }">
+    <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
+        <div class="alert alert-success" role="alert">
+                ${ mensajeCarritoOk }
+        </div>
+    </div>
+</c:if>
+
+
 <!-- Botones -->
 <div class="container" style="margin: 50px 0 50px 0;">
-    <a href="/catalogo" class="btn btn-secondary">Volver</a>
-    <a href="#" class="btn btn-primary">Añadir al Carrito</a>
+    <form method="get" action="/anyadirCarrito/${producto.idProducto}/producto">
+        <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
+    </form>
 </div>
 
 

@@ -9,6 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+
     <title>Raúl & Pavlo | Venta de camisetas de Star Wars</title>
 </head>
 <body>
@@ -39,6 +40,23 @@
 </figure>
 
 
+<!-- Alertas -->
+<c:if test="${ mensajeCarritoError != null }">
+    <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
+        <div class="alert alert-danger" role="alert">
+                ${ mensajeCarritoError }
+        </div>
+    </div>
+</c:if>
+<c:if test="${ mensajeCarritoOk != null }">
+    <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
+        <div class="alert alert-success" role="alert">
+                ${ mensajeCarritoOk }
+        </div>
+    </div>
+</c:if>
+
+
 <!-- Listado de productos -->
 <div class="container text-center">
     <div class="row">
@@ -51,7 +69,13 @@
                             <p class="card-title">${producto.nombre}</p>
                             <p class="card-text"><small class="text-muted">${producto.descripcion}</small></p>
                         </div>
-                        <div class="card-footer bg-transparent"><a href="#" class="btn btn-primary">Comprar</a></div>
+                        <div class="card-footer bg-transparent d-flex justify-content-center">
+                            <a href="/catalogo/producto/${producto.idProducto}"
+                               class="btn btn-info" style="margin-right: 5px;">Ver Más</a>
+                            <form method="get" action="/anyadirCarrito/${producto.idProducto}/index">
+                                <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
+                            </form>
+                        </div>
                     </div>
             </c:forEach>
         </div>
@@ -64,7 +88,13 @@
                         <p class="card-title">${producto.nombre}</p>
                         <p class="card-text"><small class="text-muted">${producto.descripcion}</small></p>
                     </div>
-                    <div class="card-footer bg-transparent"><a href="#" class="btn btn-primary">Comprar</a></div>
+                    <div class="card-footer bg-transparent d-flex justify-content-center">
+                        <a href="/catalogo/producto/${producto.idProducto}"
+                           class="btn btn-info" style="margin-right: 5px;">Ver Más</a>
+                        <form method="get" action="/anyadirCarrito/${producto.idProducto}/index">
+                            <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
+                        </form>
+                    </div>
                 </div>
             </c:forEach>
         </div>
@@ -79,6 +109,5 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
     crossorigin="anonymous"></script>
-
 </body>
 </html>

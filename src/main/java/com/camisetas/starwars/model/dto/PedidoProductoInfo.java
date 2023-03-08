@@ -1,4 +1,5 @@
 package com.camisetas.starwars.model.dto;
+import java.io.Serializable;
 import java.util.Date;
 
 
@@ -7,11 +8,12 @@ import java.util.Date;
  * Ha sido creada para poder almacenar en un solo objeto toda la información que necesito referente a un pedido.
  * Para poder mostrar datos con coherencia en la vista.
  */
-public class PedidoProductoInfo {
+public class PedidoProductoInfo implements Serializable {
 
 
     // Atributos
 
+    private static final long serialVersionUID = 1L;
 
     private int idPedido;
     private String estadoPedido;

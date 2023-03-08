@@ -29,6 +29,8 @@ public class Direccion implements Serializable {
 
 	private String localidad;
 
+	private String provincia;
+
 	private int numero;
 
 	private int piso;
@@ -39,18 +41,20 @@ public class Direccion implements Serializable {
 
 	public Direccion() {}
 
-	public Direccion(String calle, String codigoPostal, String localidad, int numero) {
+	public Direccion(String calle, String codigoPostal, String localidad, int numero, String provincia) {
 		this.calle = calle;
 		this.codigoPostal = codigoPostal;
 		this.localidad = localidad;
 		this.numero = numero;
+		this.provincia = provincia;
 	}
 
-	public Direccion(String calle, String codigoPostal, String letra, String localidad, int numero, int piso) {
+	public Direccion(String calle, String codigoPostal, String letra, String localidad, String provincia, int numero, int piso) {
 		this.calle = calle;
 		this.codigoPostal = codigoPostal;
 		this.letra = letra;
 		this.localidad = localidad;
+		this.provincia = provincia;
 		this.numero = numero;
 		this.piso = piso;
 	}
@@ -114,6 +118,14 @@ public class Direccion implements Serializable {
 		this.piso = piso;
 	}
 
+	public String getProvincia() {
+		return provincia;
+	}
+
+	public void setProvincia(String provincia) {
+		this.provincia = provincia;
+	}
+
 
 	// hashCode y equals
 
@@ -142,6 +154,7 @@ public class Direccion implements Serializable {
 				", codigoPostal='" + codigoPostal + '\'' +
 				", letra='" + letra + '\'' +
 				", localidad='" + localidad + '\'' +
+				", provincia='" + provincia + '\'' +
 				", numero=" + numero +
 				", piso=" + piso +
 				'}';
