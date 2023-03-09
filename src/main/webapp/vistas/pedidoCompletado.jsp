@@ -63,10 +63,9 @@
                 <a class="btn btn-success" href="/pedidos" style="margin: 10px 5px 10px 0;">
                     Ir a tus pedidos
                 </a>
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                        data-bs-target="#anyadirTarjeta" style="margin: 10px 0 10px 0;">
+                <a class="btn btn-primary" href="/catalogo" style="margin: 10px 0 10px 0;">
                     Seguir Comprando
-                </button>
+                </a>
             </div>
         </div>
     </div>

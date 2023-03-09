@@ -69,7 +69,7 @@
 
 <!-- Si no tienes direccions ves esto -->
 <c:if test="${direcciones == '[]'}">
-    <div class="d-flex justify-content-center" style="margin: 50px 0 50px 0;">
+    <div class="d-flex justify-content-center" style="margin-bottom: 100px;">
         <div class="container">
             <div class="card text-center">
                 <div class="card-header">
@@ -98,7 +98,7 @@
 
 <!-- Si tienes direccions ves esto -->
 <c:if test="${direcciones != '[]'}">
-    <div class="d-flex justify-content-center" style="margin: 100px 0 100px 0;">
+    <div class="d-flex justify-content-center" style="margin-bottom: 100px;">
         <div class="container">
             <div class="card text-center">
                 <div class="card-header">

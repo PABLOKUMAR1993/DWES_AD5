@@ -63,6 +63,14 @@
                                                 </div>
                                             </div>
                                             <div class="mb-3">
+                                                <label for="provincia" class="form-label">Provincia</label>
+                                                <input type="text" class="form-control" id="provincia" name="provincia"
+                                                       aria-describedby="emailHelp" value="${direccion.provincia}">
+                                                <div id="provinciaAyuda" class="form-text">
+                                                    Provincia a la cual pertenece la localidad.
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
                                                 <label for="calle" class="form-label">
                                                     <h1 class="display-6">Calle</h1>
                                                 </label>

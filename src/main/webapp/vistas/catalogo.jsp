@@ -142,9 +142,14 @@
                         <p class="card-title">${producto.nombre}</p>
                         <p class="card-text"><small class="text-muted">${producto.descripcion}</small></p>
                     </div>
-                    <div class="card-footer bg-transparent">
-                        <a href="/catalogo/producto/${producto.idProducto}" class="btn btn-info">Ver Más</a>
-                        <a href="#" class="btn btn-primary">Comprar</a>
+                    <div class="card-footer bg-transparent d-flex justify-content-center">
+                        <a href="/catalogo/producto/${producto.idProducto}"
+                           class="btn btn-info" style="margin-right: 5px;">Ver Más</a>
+                        <form method="get" action="/anyadirCarrito/${producto.idProducto}/catalogo">
+                            <button type="submit" class="btn btn-primary" style="margin-left: 5px;">
+                                Añadir al Carrito
+                            </button>
+                        </form>
                     </div>
                 </div>
             </c:forEach>

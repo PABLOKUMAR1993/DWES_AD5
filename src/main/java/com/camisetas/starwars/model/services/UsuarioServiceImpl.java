@@ -4,6 +4,7 @@ import com.camisetas.starwars.model.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.Calendar;
+import java.util.List;
 
 
 @Service
@@ -104,6 +105,23 @@ public class UsuarioServiceImpl implements UsuarioServiceInt {
         } catch (Exception e) {
             e.printStackTrace();
             return false;
+        }
+
+    }
+
+
+    /**
+     * Método que devuelve una lista con la cantidad de usuarios que hay en cada provincia
+     */
+    @Override
+    public List<Object[]> buscarPorProvincias() {
+
+        try {
+            return usuarioRepository.buscarPorProvincias();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
         }
 
     }

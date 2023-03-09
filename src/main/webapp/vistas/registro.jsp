@@ -74,7 +74,7 @@
                     </div>
                     <div class="mb-3" style="margin: 0 25px 0 25px">
                         <label for="email" class="form-label">Email</label>
-                        <input type="email" class="form-control" id="email" name="email">
+                        <input type="email" class="form-control" id="email" name="email" required>
                     </div>
                     <div class="mb-3" style="margin: 0 25px 0 25px">
                         <label for="contrasenya" class="form-label">Contraseña</label>
