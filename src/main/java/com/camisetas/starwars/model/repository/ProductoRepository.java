@@ -35,5 +35,11 @@ public interface ProductoRepository extends JpaRepository<Producto, Integer> {
     @Query(value=" SELECT p FROM Producto p WHERE p.idProducto IN (:ids) ")
     List<Producto> buscarProductosPorIds(List<Integer> ids);
 
+    /**
+     * Esta consulta devuelve una lista de productos a partir de el id de la familia
+     */
+    @Query(value="select p from Producto p where p.familia.idFamilia = ?1")
+    List<Producto> buscarPorFamilia(int idFamilia);
+
 
 }

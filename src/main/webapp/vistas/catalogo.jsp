@@ -22,12 +22,8 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://fondosmil.com/fondo/81720.jpg" class="d-block w-100"
+            <img src="https://i.gyazo.com/f4ca23e2d00dc4e1ccd4825feb91321f.jpg" class="d-block w-100"
                  alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Catálogo</h1>
-                <h1 class="display-5">Página de Catálogo.</h1>
-            </div>
         </div>
     </div>
 </div>
@@ -35,7 +31,7 @@
 
 <!-- Título -->
 <figure class="text-center" style="padding: 50px 0 50px 0;">
-    <h1 class="display-1">Todas nuestras camisetas</h1>
+    <h1 class="display-1">Nuestro Catálogo</h1>
 </figure>
 
 

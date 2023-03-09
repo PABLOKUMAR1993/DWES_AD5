@@ -14,7 +14,7 @@ public class ProductoServiceImpl implements ProductoServiceInt {
 
 
     @Autowired
-    ProductoRepository productoRepository;
+    private ProductoRepository productoRepository;
 
 
     // Métodos Implementados
@@ -72,6 +72,22 @@ public class ProductoServiceImpl implements ProductoServiceInt {
 
         try {
             return this.productoRepository.findById(idProducto).orElse(null);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+    /**
+     * Método que devolverá una lista de productos por su familia
+     */
+    @Override
+    public List<Producto> buscarPorFamilia(int idFamilia) {
+
+        try{
+            return this.productoRepository.buscarPorFamilia(idFamilia);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

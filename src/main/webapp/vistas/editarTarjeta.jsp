@@ -22,13 +22,9 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://wallpapercave.com/wp/wp2967253.jpg"
+            <img src="https://i.gyazo.com/a31fc6b222841e2d292e4d0d8436db40.jpg"
                  class="d-block w-100"
                  alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Editar Tarjeta</h1>
-                <h1 class="display-5">Aquí puedes editar la tarjeta seleccionada.</h1>
-            </div>
         </div>
     </div>
 </div>
@@ -92,8 +88,7 @@
                                             </div>
                                         </div>
                                         <div class="card-footer bg-transparent d-flex justify-content-center">
-                                            <a href="/pago" class="btn btn-secondary" data-bs-dismiss="modal"
-                                               style="margin: 10px 10px 10px 0;">
+                                            <a href="/tarjetas" class="btn btn-secondary" style="margin: 10px 10px 10px 0;">
                                                 Volver
                                             </a>
                                             <button type="submit" class="btn btn-primary"

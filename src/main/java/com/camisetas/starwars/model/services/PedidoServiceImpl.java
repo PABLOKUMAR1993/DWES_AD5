@@ -52,4 +52,38 @@ public class PedidoServiceImpl implements PedidoServiceInt {
     }
 
 
+    /**
+     * Método que guarda un pedido en la base de datos.
+     */
+    @Override
+    public boolean guardarPedido(Pedido pedido) {
+
+        try {
+            pedidoRepository.save(pedido);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+
+    /**
+     * Método que elimina un pedido de la base de datos.
+     */
+    @Override
+    public boolean eliminarPedido(int idPedido) {
+
+        try {
+            pedidoRepository.deleteById(idPedido);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+
 }

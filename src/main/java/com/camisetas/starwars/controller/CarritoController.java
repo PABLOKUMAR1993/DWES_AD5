@@ -1,24 +1,18 @@
 package com.camisetas.starwars.controller;
 import com.camisetas.starwars.model.dto.Cesta;
-import com.camisetas.starwars.model.entity.Direccion;
-import com.camisetas.starwars.model.entity.Producto;
-import com.camisetas.starwars.model.entity.Tarjeta;
-import com.camisetas.starwars.model.entity.Usuario;
-import com.camisetas.starwars.model.services.DireccionServiceInt;
-import com.camisetas.starwars.model.services.ProductoServiceInt;
-import com.camisetas.starwars.model.services.TarjetaServiceInt;
-import com.camisetas.starwars.model.services.UsuarioServiceInt;
+import com.camisetas.starwars.model.entity.*;
+import com.camisetas.starwars.model.services.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 
@@ -33,13 +27,13 @@ public class CarritoController {
     private ProductoServiceInt productoService;
 
     @Autowired
-    private DireccionServiceInt direccionService;
-
-    @Autowired
     private UsuarioServiceInt usuarioService;
 
     @Autowired
-    private TarjetaServiceInt tarjetaService;
+    private PedidoServiceInt pedidoService;
+
+    @Autowired
+    private PedidosProductoInt pedidosProductoService;
 
 
     // Métodos
@@ -52,8 +46,7 @@ public class CarritoController {
     public String anyadirCarrito(@PathVariable("idProducto") int idProducto, @PathVariable("pagina") String pagina,
                                  HttpSession session, Model model, Authentication aut) {
 
-        // Si el usuario no está autenticado,
-        // devuelvo a la página de la que proviene y le muestro un mensaje.
+        // Si el usuario no está autenticado, devuelvo a la página de la que proviene y le muestro un mensaje.
         if (aut == null) {
 
             model.addAttribute("mensajeCarritoError",
@@ -70,7 +63,7 @@ public class CarritoController {
                     return "forward:/";
             }
 
-        } else {
+        } else { // Si el usuario está autenticado, añado el producto a la cesta.
 
             // Recupero la cesta de sesión, por si existe, si no, creo una nueva.
             List<Cesta> cesta = (List<Cesta>) session.getAttribute("cesta");
@@ -230,93 +223,122 @@ public class CarritoController {
 
 
     /**
-     * Método para mostrar la página para elegir dirección de envío.
-     */
-    @GetMapping("/direccionEnvioPedido")
-    public String direccionEnvioPedido(Authentication aut, Model model) {
-
-        // Obtengo el usuario.
-        Usuario usuario = usuarioService.buscarPorEmail(aut.getName());
-
-        // Recupero la lista del usuario
-        List<Direccion> direcciones = usuario.getDirecciones();
-
-        // Envío la lista de direcciones a la vista
-        model.addAttribute("direcciones", direcciones);
-
-        return "direccionesEnvio";
-
-    }
-
-
-    /**
-     * Método para almacenar la dirección de envío elegida por el cliente en la sesión.
-     */
-    @PostMapping("/direccionEnvioPedido/{id}")
-    public String direccionEnvioPedido(@PathVariable("id") int idDireccion, HttpSession session,
-                                       RedirectAttributes flash) {
-
-        // Recupero la dirección de envío elegida por el cliente
-        Direccion direccion = direccionService.buscarPorId(idDireccion);
-
-        // Almaceno la dirección en sesión
-        session.setAttribute("direccionEnvioPedido", direccion);
-
-        // Mensaje de confirmación
-        flash.addFlashAttribute("mensajeDireccionOk",
-                "Dirección de envío seleccionada correctamente.");
-
-        return "redirect:/tarjetaEnvioPedido";
-
-    }
-
-
-    /**
-     * Método para mostrar la página para elegir tarjeta para el pago.
-     */
-    @GetMapping("/tarjetaEnvioPedido")
-    public String tarjetaEnvioPedido(Authentication aut, Model model) {
-
-        // Obtengo el usuario.
-        Usuario usuario = usuarioService.buscarPorEmail(aut.getName());
-
-        // Recupero la lista del usuario
-        List<Tarjeta> tarjetas = usuario.getTarjetas();
-
-        // Envío la lista de direcciones a la vista
-        model.addAttribute("tarjetas", tarjetas);
-
-        return "tarjetasEnvio";
-
-    }
-
-
-    /**
-     * Método para almacenar la tarjeta de pago elegida por el usuario en la sesión.
-     */
-    @PostMapping("/tarjetaEnvioPedido/{id}")
-    public String tarjetaEnvioPedido(@PathVariable("id") int idTarjeta, HttpSession session, RedirectAttributes flash) {
-
-        // Recupero la dirección de envío elegida por el cliente
-        Tarjeta tarjeta = tarjetaService.buscarTarjetaPorId(idTarjeta);
-
-        // Almaceno la dirección en sesión
-        session.setAttribute("tarjetaEnvioPedido", tarjeta);
-
-        // Mensaje de confirmación
-        flash.addFlashAttribute("mensajePedidoOk", "Pedido completado con éxito!.");
-
-        return "redirect:/pedidoCompletado";
-
-    }
-
-
-    /**
-     * Método para mostrar la página de pedido completado.
+     * Este método recibirá la lista de productos de la cesta de la compra, la dirección de envío y la tarjeta de pago.
+     * Se encargará de crear el pedido y de devolver a la vista con un mensaje de que el pedido está correcto.
      */
     @GetMapping("/pedidoCompletado")
-    public String pedidoCompletado() {
+    public String pedidoCompletado(HttpSession session, Authentication aut, Model model) {
+
+        // Recupero la cesta de sesión.
+        List<Cesta> cesta = (List<Cesta>) session.getAttribute("cesta");
+
+        // Recupero la dirección de envío elegida por el cliente
+        Direccion direccion = (Direccion) session.getAttribute("direccionEnvioPedido");
+
+        // Recupero la tarjeta de pago elegida por el cliente
+        Tarjeta tarjeta = (Tarjeta) session.getAttribute("tarjetaEnvioPedido");
+
+        // Obtengo el usuario.
+        Usuario usuario = usuarioService.buscarPorEmail(aut.getName());
+
+        // Creo el pedido
+        Pedido pedido = new Pedido();
+        pedido.setUsuario(usuario);
+        pedido.setDireccion(direccion);
+        pedido.setTarjeta(tarjeta);
+        pedido.setFecha(new Date());
+        pedido.setEstado("completado");
+
+        // Guardo el pedido
+        pedidoService.guardarPedido(pedido);
+
+        // Recorro la cesta y creo las líneas de pedido
+        for (Cesta cesta1 : cesta) {
+            PedidosProducto lineaPedido = new PedidosProducto();
+            lineaPedido.setPedido(pedido);
+            lineaPedido.setProducto(cesta1.getProducto());
+            lineaPedido.setUnidades(cesta1.getCantidad());
+            lineaPedido.setPrecio(cesta1.getProducto().getPrecio());
+            pedidosProductoService.guardarLinea(lineaPedido);
+        }
+
+        // Elimino la cesta de sesión
+        session.removeAttribute("cesta");
+
+        // Elimino el número de productos de sesión
+        session.removeAttribute("cantidadProductos");
+
+        // Elimino la dirección de envío de sesión
+        session.removeAttribute("direccionEnvioPedido");
+
+        // Elimino la tarjeta de pago de sesión
+        session.removeAttribute("tarjetaEnvioPedido");
+
+        // Publico el pedido y un mensaje para la vista
+        model.addAttribute("pedido", pedido);
+        model.addAttribute("mensajePedidoOk", "Pedido completado correctamente.");
+
         return "pedidoCompletado";
+
+    }
+
+
+    /**
+     * Método que antes de cerrar sesión, guarda el carrito en la base de datos.
+     */
+    @GetMapping("/guardarCesta")
+    public String logout(HttpSession session, Authentication aut) {
+
+        // Recupero la cesta de sesión.
+        List<Cesta> cesta = (List<Cesta>) session.getAttribute("cesta");
+
+        if (cesta != null) {
+            // Recupero la dirección de envío elegida por el cliente
+            Direccion direccion = (Direccion) session.getAttribute("direccionEnvioPedido");
+
+            // Recupero la tarjeta de pago elegida por el cliente
+            Tarjeta tarjeta = (Tarjeta) session.getAttribute("tarjetaEnvioPedido");
+
+            // Obtengo el usuario.
+            Usuario usuario = usuarioService.buscarPorEmail(aut.getName());
+
+            // Creo el pedido
+            Pedido pedido = new Pedido();
+            pedido.setUsuario(usuario);
+            pedido.setDireccion(direccion);
+            pedido.setTarjeta(tarjeta);
+            pedido.setFecha(new Date());
+            pedido.setEstado("carrito");
+
+            // Guardo el pedido
+            pedidoService.guardarPedido(pedido);
+
+            // Recorro la cesta y creo las líneas de pedido
+            for (Cesta cesta1 : cesta) {
+                PedidosProducto lineaPedido = new PedidosProducto();
+                lineaPedido.setPedido(pedido);
+                lineaPedido.setProducto(cesta1.getProducto());
+                lineaPedido.setUnidades(cesta1.getCantidad());
+                lineaPedido.setPrecio(cesta1.getProducto().getPrecio());
+                pedidosProductoService.guardarLinea(lineaPedido);
+            }
+
+            // Elimino la cesta de sesión
+            session.removeAttribute("cesta");
+
+            // Elimino el número de productos de sesión
+            session.removeAttribute("cantidadProductos");
+
+            // Elimino la dirección de envío de sesión
+            session.removeAttribute("direccionEnvioPedido");
+
+            // Elimino la tarjeta de pago de sesión
+            session.removeAttribute("tarjetaEnvioPedido");
+
+        }
+
+        return "redirect:/logout";
+
     }
 
 

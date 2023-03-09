@@ -22,13 +22,9 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://4kwallpapers.com/images/wallpapers/sith-star-wars-lightsaber-dark-background-2880x1800-5554.jpg"
+            <img src="https://i.gyazo.com/95b2da123ab989d4c843aae3ec4109e5.jpg"
                  class="d-block w-100"
                  alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Métodos de Pago</h1>
-                <h1 class="display-5">Puedes gestionar aquí tus métodos de pago.</h1>
-            </div>
         </div>
     </div>
 </div>

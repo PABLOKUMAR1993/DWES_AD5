@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
 
 @RestController
@@ -38,6 +39,18 @@ public class ProductoRestController {
         } else {
             return producto.toString();
         }
+
+    }
+
+
+    /**
+     * Método que devolverá una lista de productos por su familia
+     */
+    @GetMapping("/familia/{familia}")
+    public String productoPorFamilia(@PathVariable("familia") int idFamilia) {
+
+        List<Producto> productos = productoService.buscarPorFamilia(idFamilia);
+        return productos.toString();
 
     }
 

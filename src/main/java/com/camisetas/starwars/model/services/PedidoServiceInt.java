@@ -8,6 +8,8 @@ public interface PedidoServiceInt {
 
     List<Pedido> buscarPedidosPorIdUsuario(int idUsuario);
     List<Pedido> buscarTodos();
+    boolean guardarPedido(Pedido pedido);
+    boolean eliminarPedido(int idPedido);
 
 
 }

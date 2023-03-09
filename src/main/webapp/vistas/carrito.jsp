@@ -23,12 +23,8 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://rare-gallery.com/mocahbig/395347-the-bad-batch-members-star-wars-4k-pc-wallpaper.jpg"
+            <img src="https://i.gyazo.com/a31fc6b222841e2d292e4d0d8436db40.jpg"
                  class="d-block w-100" alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Carrito</h1>
-                <h1 class="display-5">Resumen de los productos que has ido añadiendo al carrito.</h1>
-            </div>
         </div>
     </div>
 </div>

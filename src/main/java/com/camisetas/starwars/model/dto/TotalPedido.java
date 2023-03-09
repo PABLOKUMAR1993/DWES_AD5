@@ -1,7 +1,6 @@
 package com.camisetas.starwars.model.dto;
-
-
 import java.io.Serializable;
+
 
 /**
  * Esta clase representa la suma del importe de los productos y cantidades de un pedido.

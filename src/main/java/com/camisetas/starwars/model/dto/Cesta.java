@@ -1,10 +1,12 @@
 package com.camisetas.starwars.model.dto;
 import com.camisetas.starwars.model.entity.Producto;
-
 import java.io.Serializable;
 import java.util.Objects;
 
 
+/**
+ * Esta clase Data Transfer Object (DTO) representa la cesta de la compra (Producto + cantidad).
+ */
 public class Cesta implements Serializable {
 
 

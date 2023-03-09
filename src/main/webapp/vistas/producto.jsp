@@ -22,26 +22,30 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://i.pinimg.com/originals/60/c2/17/60c2177448cbf90408ed1df7da78cf00.jpg"
+            <img src="https://i.gyazo.com/75db68e1a276a06e5bded12ba71a3249.jpg"
                  class="d-block w-100" alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Detalles de Producto</h1>
-                <h1 class="display-5">Página con detalles de un producto concreto.</h1>
-            </div>
         </div>
     </div>
 </div>
 
 
+<!-- Título -->
+<figure class="text-center" style="padding: 50px 0 50px 0;">
+    <h1 class="display-1">Producto Individual</h1>
+</figure>
+
+
 <!-- Breadcrumbs -->
-<div class="container" style="margin: 50px 0 50px 0;">
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Inicio</a></li>
-            <li class="breadcrumb-item"><a href="/catalogo">Catálogo</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Producto ${producto.idProducto}</li>
-        </ol>
-    </nav>
+<div class="d-flex justify-content-center" style="margin-bottom: 50px;">
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                <li class="breadcrumb-item"><a href="/catalogo">Catálogo</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Producto ${producto.idProducto}</li>
+            </ol>
+        </nav>
+    </div>
 </div>
 
 
@@ -63,24 +67,28 @@
 
 
 <!-- Botones -->
-<div class="container" style="margin: 50px 0 50px 0;">
-    <form method="get" action="/anyadirCarrito/${producto.idProducto}/producto">
-        <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
-    </form>
+<div class="d-flex justify-content-center" style="margin-bottom: 50px;">
+    <div class="container" style="margin: 50px 0 50px 0;">
+        <form method="get" action="/anyadirCarrito/${producto.idProducto}/producto">
+            <button type="submit" class="btn btn-primary">Añadir al Carrito</button>
+        </form>
+    </div>
 </div>
 
 
 <!-- Detalles de producto -->
-<div class="container-fluid">
-    <div class="card">
-        <div class="card-body">
-            <h3 class="card-title">${producto.precio} $</h3>
-            <h5 class="card-title">${producto.nombre}</h5>
-            <p class="card-text">${producto.descripcion}</p>
-            <p class="card-text"><small class="text-muted">Quedán ${producto.stock} unidades</small></p>
-            <p class="card-text"><small class="text-muted">ID: ${producto.idProducto}</small></p>
+<div class="d-flex justify-content-center" style="margin-bottom: 50px;">
+    <div class="container">
+        <div class="card">
+            <div class="card-body">
+                <h3 class="card-title">${producto.precio} $</h3>
+                <h5 class="card-title">${producto.nombre}</h5>
+                <p class="card-text">${producto.descripcion}</p>
+                <p class="card-text"><small class="text-muted">Quedán ${producto.stock} unidades</small></p>
+                <p class="card-text"><small class="text-muted">ID: ${producto.idProducto}</small></p>
+            </div>
+            <img src="${producto.imagen}" class="card-img-bottom" alt="...">
         </div>
-        <img src="${producto.imagen}" class="card-img-bottom" alt="...">
     </div>
 </div>
 

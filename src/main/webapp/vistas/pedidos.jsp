@@ -22,12 +22,8 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://wallpaperaccess.com/full/11792.jpg"
+            <img src="https://i.gyazo.com/b84837f809c60b599ececed904b62fc2.jpg"
                  class="d-block w-100" alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Pedidos</h1>
-                <h1 class="display-5">Aquí tienes tu historial de pedidos.</h1>
-            </div>
         </div>
     </div>
 </div>

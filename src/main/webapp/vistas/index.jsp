@@ -23,12 +23,8 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://rare-gallery.com/mocahbig/395347-the-bad-batch-members-star-wars-4k-pc-wallpaper.jpg"
+            <img src="https://i.gyazo.com/dfa6ff8dee0954897133e37187b480bb.jpg"
                  class="d-block w-100" alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Raúl & Pavlo</h1>
-                <h1 class="display-5">Camisetas de tu saga favorita en la mejor calidad y originales.</h1>
-            </div>
         </div>
     </div>
 </div>
@@ -36,7 +32,7 @@
 
 <!-- Título -->
 <figure class="text-center" style="padding: 50px 0 50px 0;">
-    <h1 class="display-1">Lo más Nuevo</h1>
+    <h1 class="display-1">Raúl & Pavlo</h1>
 </figure>
 
 

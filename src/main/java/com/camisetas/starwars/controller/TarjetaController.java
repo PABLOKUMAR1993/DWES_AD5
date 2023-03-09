@@ -1,5 +1,4 @@
 package com.camisetas.starwars.controller;
-
 import com.camisetas.starwars.model.entity.Tarjeta;
 import com.camisetas.starwars.model.entity.Usuario;
 import com.camisetas.starwars.model.services.TarjetaServiceInt;
@@ -15,7 +14,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
+import javax.servlet.http.HttpSession;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
@@ -152,6 +151,7 @@ public class TarjetaController {
                 }
             }
         } else {
+            // Envío un mensaje de error.
             flash.addFlashAttribute("mensajeError", "Error al eliminar la tarjeta.");
             switch (origen) {
                 case "pedido":
@@ -201,6 +201,43 @@ public class TarjetaController {
             flash.addFlashAttribute("mensajeError", "Error al editar la tarjeta.");
             return "redirect:/tarjetas";
         }
+
+    }
+
+
+    /**
+     * Método para mostrar la página para elegir tarjeta para el pago.
+     */
+    @GetMapping("/tarjetaEnvioPedido")
+    public String tarjetaEnvioPedido(Authentication aut, Model model) {
+
+        // Obtengo el usuario.
+        Usuario usuario = usuarioService.buscarPorEmail(aut.getName());
+
+        // Recupero la lista de tarjetas del usuario
+        List<Tarjeta> tarjetas = usuario.getTarjetas();
+
+        // Envío la lista de tarjetas a la vista
+        model.addAttribute("tarjetas", tarjetas);
+
+        return "tarjetasEnvio";
+
+    }
+
+
+    /**
+     * Método para almacenar la tarjeta de pago elegida por el usuario en la sesión.
+     */
+    @GetMapping("/tarjetaEnvioPedido/{id}")
+    public String tarjetaEnvioPedido(@PathVariable("id") int idTarjeta, HttpSession session) {
+
+        // Recupero la tarjeta de envío elegida por el cliente
+        Tarjeta tarjeta = tarjetaService.buscarTarjetaPorId(idTarjeta);
+
+        // Almaceno la tarjeta en sesión
+        session.setAttribute("tarjetaEnvioPedido", tarjeta);
+
+        return "redirect:/pedidoCompletado";
 
     }
 

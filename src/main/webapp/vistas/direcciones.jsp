@@ -22,13 +22,9 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://wallpapercave.com/wp/wp2967253.jpg"
+            <img src="https://i.gyazo.com/e01cf9fc1ae8f17056242005cbdd3f2f.jpg"
                  class="d-block w-100"
                  alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Direcciones de Envío</h1>
-                <h1 class="display-5">Puedes gestionar aquí tus direccions de envío.</h1>
-            </div>
         </div>
     </div>
 </div>

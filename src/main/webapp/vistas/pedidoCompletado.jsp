@@ -22,13 +22,9 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://4kwallpapers.com/images/wallpapers/sith-star-wars-lightsaber-dark-background-2880x1800-5554.jpg"
+            <img src="https://i.gyazo.com/6b2a36817cc1b9053c97ece799b8e5d6.jpg"
                  class="d-block w-100"
                  alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Gracias!</h1>
-                <h1 class="display-5">Tu pedido se ha realizado correctamente.</h1>
-            </div>
         </div>
     </div>
 </div>
@@ -43,8 +39,8 @@
 <!-- Alertas -->
 <c:if test="${ mensajePedidoOk != null }">
     <div class="d-flex justify-content-center" style="margin: 25px 0 25px 0;">
-        <div class="alert alert-danger" role="alert">
-                ${ mensajePedidoOk }
+        <div class="alert alert-success" role="alert">
+            ${ mensajePedidoOk }
         </div>
     </div>
 </c:if>
@@ -58,12 +54,14 @@
                 Pedido Completado
             </div>
             <div class="card-body" style="margin: 25px 0 25px 0;">
-                <h5 class="card-title">Tu número de pedido es el: 01</h5>
-                <p class="card-text">Datos adicionales.</p>
+                <h5 class="card-title">Tu número de pedido es el: ${pedido.idPedido}</h5>
+                <p class="card-text">El estado de tu pedido es: <b>${pedido.estado}</b></p>
+                <p class="card-text">Se entregará en tu dirección de: <b>${pedido.direccion.localidad}</b></p>
+                <p class="card-text">Se ha pagado con tu tarjeta: <b>${pedido.tarjeta.numero}</b></p>
             </div>
             <div class="card-footer text-muted">
-                <a class="btn btn-success" href="/direccionEnvioPedido" style="margin: 10px 5px 10px 0;">
-                    ir a tus pedidos
+                <a class="btn btn-success" href="/pedidos" style="margin: 10px 5px 10px 0;">
+                    Ir a tus pedidos
                 </a>
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                         data-bs-target="#anyadirTarjeta" style="margin: 10px 0 10px 0;">
@@ -73,6 +71,7 @@
         </div>
     </div>
 </div>
+
 
 <!-- Footer -->
 <jsp:include page="footer.jsp"></jsp:include>

@@ -6,10 +6,12 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface TarjetaRepository extends JpaRepository<Tarjeta, Integer> {
 
+
     /**
      * Método el cual busca una tarjeta por su número.
      */
     @Query("SELECT t FROM Tarjeta t WHERE t.numero = ?1")
     Tarjeta buscarPorNumero(String numero);
+
 
 }

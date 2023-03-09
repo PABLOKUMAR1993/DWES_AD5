@@ -22,16 +22,18 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://4kwallpapers.com/images/wallpapers/sith-star-wars-lightsaber-dark-background-2880x1800-5554.jpg"
+            <img src="https://i.gyazo.com/e2aa947710a8decea839dab610c0cf0e.jpg"
                  class="d-block w-100"
                  alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Iniciar Sesión</h1>
-                <h1 class="display-5">Página para iniciar sesión</h1>
-            </div>
         </div>
     </div>
 </div>
+
+
+<!-- Título -->
+<figure class="text-center" style="padding: 50px 0 50px 0;">
+    <h1 class="display-1">Login</h1>
+</figure>
 
 
 <!-- Mensaje emergente -->

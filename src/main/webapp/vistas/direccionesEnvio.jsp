@@ -22,13 +22,9 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://wallpapercave.com/wp/wp2967253.jpg"
+            <img src="https://i.gyazo.com/3cf3690632b09842203a4de8acd4cd46.jpg"
                  class="d-block w-100"
                  alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Direcciones de Envío</h1>
-                <h1 class="display-5">Puedes gestionar aquí tus direccions de envío.</h1>
-            </div>
         </div>
     </div>
 </div>
@@ -58,8 +54,8 @@
 
 
 <!-- Breadcrumbs -->
-<div class="d-flex justify-content-center" style="margin-top: 50px;">
-    <div class="container" style="margin: 50px 0 50px 0;">
+<div class="d-flex justify-content-center">
+    <div class="container" style="margin-top: 50px;">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Inicio</a></li>

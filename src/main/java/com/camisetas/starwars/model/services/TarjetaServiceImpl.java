@@ -67,6 +67,7 @@ public class TarjetaServiceImpl implements TarjetaServiceInt {
      */
     @Override
     public boolean actualizarTarjeta(Tarjeta tarjeta) {
+
         try {
             tarjetaRepository.save(tarjeta);
             return true;
@@ -74,6 +75,7 @@ public class TarjetaServiceImpl implements TarjetaServiceInt {
             e.printStackTrace();
             return false;
         }
+
     }
 
 }

@@ -11,6 +11,7 @@ public interface ProductoServiceInt {
     Producto buscarPorId(int id);
     List<Producto> buscarProductosPorIds(List<Integer> ids);
     Producto buscarProductoPorId(int idProducto);
+    List<Producto> buscarPorFamilia(int idFamilia);
 
 
 }

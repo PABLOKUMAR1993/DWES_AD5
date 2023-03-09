@@ -29,12 +29,13 @@ public class Familia implements Serializable {
 
 	
 	// Constructor
-	
-	public Familia() {
-	}
+
+
+	public Familia() {}
 
 
 	// Getters y Setters
+
 
 	public int getIdFamilia() {
 		return this.idFamilia;
@@ -75,6 +76,7 @@ public class Familia implements Serializable {
 	
 
 	// toString
+
 
 	@Override
 	public String toString() {

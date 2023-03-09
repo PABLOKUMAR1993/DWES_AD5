@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 
@@ -181,7 +182,7 @@ public class DireccionController {
      * Este método recibe el id de una dirección y la envía a la vista para que el usuario pueda editarla.
      */
     @GetMapping("/editarDireccion/{id}")
-    public String editarDireccion(@PathVariable("id") int idDireccion, Model model, RedirectAttributes flash) {
+    public String editarDireccion(@PathVariable("id") int idDireccion, Model model) {
 
         // Recupero la dirección.
         Direccion direccion = direccionService.buscarPorId(idDireccion);
@@ -214,5 +215,48 @@ public class DireccionController {
         }
 
     }
+
+
+    /**
+     * Método para mostrar la página para elegir dirección de envío.
+     */
+    @GetMapping("/direccionEnvioPedido")
+    public String direccionEnvioPedido(Authentication aut, Model model) {
+
+        // Obtengo el usuario.
+        Usuario usuario = usuarioService.buscarPorEmail(aut.getName());
+
+        // Recupero la lista del usuario
+        List<Direccion> direcciones = usuario.getDirecciones();
+
+        // Envío la lista de direcciones a la vista
+        model.addAttribute("direcciones", direcciones);
+
+        return "direccionesEnvio";
+
+    }
+
+
+    /**
+     * Método para almacenar la dirección de envío elegida por el cliente en la sesión.
+     */
+    @PostMapping("/direccionEnvioPedido/{id}")
+    public String direccionEnvioPedido(@PathVariable("id") int idDireccion, HttpSession session,
+                                       RedirectAttributes flash) {
+
+        // Recupero la dirección de envío elegida por el cliente
+        Direccion direccion = direccionService.buscarPorId(idDireccion);
+
+        // Almaceno la dirección en sesión
+        session.setAttribute("direccionEnvioPedido", direccion);
+
+        // Mensaje de confirmación
+        flash.addFlashAttribute("mensajeDireccionOk",
+                "Dirección de envío seleccionada correctamente.");
+
+        return "redirect:/tarjetaEnvioPedido";
+
+    }
+
 
 }

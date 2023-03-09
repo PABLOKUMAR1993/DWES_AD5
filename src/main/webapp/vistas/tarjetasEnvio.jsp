@@ -22,13 +22,9 @@
 <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
     <div class="carousel-inner">
         <div class="carousel-item active">
-            <img src="https://4kwallpapers.com/images/wallpapers/sith-star-wars-lightsaber-dark-background-2880x1800-5554.jpg"
+            <img src="https://i.gyazo.com/f4ca23e2d00dc4e1ccd4825feb91321f.jpg"
                  class="d-block w-100"
                  alt="imágen de portada para la página de inicio">
-            <div class="carousel-caption d-none d-md-block">
-                <h1 class="display-1">Métodos de Pago</h1>
-                <h1 class="display-5">Puedes gestionar aquí tus métodos de pago.</h1>
-            </div>
         </div>
     </div>
 </div>
@@ -65,8 +61,8 @@
 
 
 <!-- Breadcrumbs -->
-<div class="d-flex justify-content-center" style="margin-top: 50px;">
-    <div class="container" style="margin: 50px 0 50px 0;">
+<div class="d-flex justify-content-center">
+    <div class="container" style="margin-top: 50px;">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Inicio</a></li>
@@ -138,7 +134,7 @@
                                                             style="margin: 10px 10px 10px 0;">
                                                         Eliminar Tarjeta
                                                     </button>
-                                                    <a href="/pedidoCompletado"
+                                                    <a href="/tarjetaEnvioPedido/${tarjeta.idTarjeta}"
                                                        class="btn btn-success">
                                                         Elegir Tarjeta
                                                     </a>

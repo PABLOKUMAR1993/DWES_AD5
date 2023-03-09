@@ -90,7 +90,7 @@
                     </sec:authorize>
                     <sec:authorize access="isAuthenticated()">
                         <li style="margin-top: 25px;">
-                            <a href="/logout" class="btn btn-danger">Cerrar Sesión</a>
+                            <a href="/guardarCesta" class="btn btn-danger">Cerrar Sesión</a>
                         </li>
                     </sec:authorize>
                 </ul>
